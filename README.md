@@ -1,4 +1,4 @@
-# Tempest
+# Tempest JTAG-PDI RE project
 
 ## What is Tempest
 
@@ -10,6 +10,14 @@ This project contains documentation on the JTAG-PDI protocol used by many of the
 It documents both the program, and debug components with the intention of providing a clean source of documentation for 3rd party implementations of PDI.
 
 The goal is to allow for a full Open-Source implementation of program and debug tooling for these chips thereby eliminating the need/reliance on Windows-only vendor tools for FOSS projects.
+
+## Table of contents
+
+* [What is PDI](pdi.md)
+* [Memory Map](memory.md)
+* [Programming Interface](programming.md)
+* [Debug Interface](debugging/index.md)
+  * [Single-stepping](debugging/single-stepping.md)
 
 ## Licensing
 
