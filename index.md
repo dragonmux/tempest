@@ -1,3 +1,15 @@
+```{toctree}
+:hidden:
+:glob:
+
+pdi
+memory
+programming
+debugging/index
+license
+
+```
+
 # Tempest JTAG-PDI RE project
 
 ## What is Tempest
@@ -21,4 +33,4 @@ The goal is to allow for a full Open-Source implementation of program and debug 
 
 ## Licensing
 
-This project is licensed under the Creative Commons [CC-BY-SA](https://creativecommons.org/licenses/by-sa/2.0/) and can be found in [LICENSE](LICENSE)
+This project is licensed under the Creative Commons [CC-BY-SA](https://creativecommons.org/licenses/by-sa/2.0/) and can be found in [LICENSE](license.md)
