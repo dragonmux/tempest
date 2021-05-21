@@ -1,3 +1,10 @@
+```{toctree}
+:hidden:
+:glob:
+
+*
+```
+
 # Debugging using PDI
 
 ## Getting started
@@ -21,3 +28,7 @@ ldcs status
 key debug
 ldcs status
 ```
+
+
+
+

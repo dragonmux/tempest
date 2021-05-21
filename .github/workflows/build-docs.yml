@@ -14,7 +14,7 @@ jobs:
         run: |
           echo "$HOME/.local/bin:$PATH" >> $GITHUB_PATH
           echo "GITHUB_WORKSPACE=\"`pwd`\"" >> $GITHUB_ENV
-      - name: Checkout libnokogiri
+      - name: Checkout Tempest
         uses: actions/checkout@v2
         with:
           lfs: true
@@ -34,5 +34,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: docs
-          FOLDER: build/docs
+          FOLDER: _build
           CLEAN: true
