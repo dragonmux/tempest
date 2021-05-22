@@ -29,6 +29,29 @@ The opcode has the form:
 PP defines an addressing form given by the [pointer rules section](#pointer-rules) below.
 BB follows the [size rules section](#size-rules) below
 
+### STS
+
+The STS instruction stores up to 4 bytes of data to a given direct address.
+The opcode has the form:
+
+| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+|---|---|---|---|---|---|---|---|
+| 0 | 1 | 0 | 0 | A | A | B | B |
+
+AA and BB follow the [size rules](#size-rules) below
+
+### ST
+
+The ST instruction stores up to 4 bytes of data to the address given by the internal indirect addressing `ptr` register which can only be directly written to by this instruction.
+The opcode has the form:
+
+| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+|---|---|---|---|---|---|---|---|
+| 0 | 1 | 1 | 0 | P | P | B | B |
+
+PP defines an addressing form given by the [pointer rules section](#pointer-rules) below.
+BB follows the [size rules section](#size-rules) below
+
 ### Size rules
 
 There are two size types (A and B) in the official protocol documentation.. however, they're identical so we only document them once here. A is always used for address length encoding, and B for data.
