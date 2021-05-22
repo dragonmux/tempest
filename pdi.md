@@ -26,6 +26,17 @@ The opcode has the form:
 |---|---|---|---|---|---|---|---|
 | 0 | 0 | 1 | 0 | P | P | B | B |
 
+PP defines an addressing form given by the following table:
+
+| Value |      Meaning     |
+| :---: |:-----------------|
+|  0 0  | *ptr             |
+|  0 1  | *(ptr++)         |
+|  1 0  | ptr              |
+|  1 1  | ptr++ (reserved) |
+
+BB follows the [size rules](#Size-rules) below
+
 ### Size rules
 
 There are two size types (A and B) in the official protocol documentation.. however, they're identical so we only document them once here. A is always used for address length encoding, and B for data.
@@ -36,7 +47,7 @@ When present the A value is transmitted first, then the B.
 The following table defines the possible bit values and their meanings:
 
 | Value | Meaning |
-|-------|---------|
+| :---: |:--------|
 |  0 0  | 1 byte  |
 |  0 1  | 2 bytes |
 |  1 0  | 3 bytes |
