@@ -52,7 +52,7 @@ The opcode has the form:
 | 0 | 1 | 1 | 0 | P | P | B | B |
 
 PP defines an addressing form given by the [pointer rules section](#pointer-rules) below.
-BB follows the [size rules section](#size-rules) below
+BB follows
 
 ### LDCS
 
@@ -64,6 +64,17 @@ They are encoded numerically in order in the bottom half of the instruction, whi
 | 1 | 0 | 0 | 0 | R | R | R | R |
 
 RRRR defines which register to read.
+
+### REPEAT
+
+The REPEAT instruction specifies that the next instruction(!) is to be repeated N times after initial execution, where N is specified in the bytes following this instruction.
+The opcode has the following form:
+
+| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+|---|---|---|---|---|---|---|---|
+| 1 | 0 | 1 | 0 | 0 | 0 | B | B |
+
+BB follows the [size rules section](#size-rules) below and specifies how many bytes follow this instruction to be 0-padded and loaded into the PDI repeat register
 
 ### STCS
 
