@@ -34,6 +34,7 @@ source_suffix = {
 
 exclude_patterns = [
 	'.venv/*',
+	'.github/*',
 	'config.py',
 	'LICENSE',
 ]
