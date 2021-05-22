@@ -94,8 +94,16 @@
 <li class="toctree-l3"><a class="reference internal" href="#ld">LD</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sts">STS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#st">ST</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#size-rules">Size rules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pointer-rules">Pointer rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ldcs">LDCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stcs">STCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#size-rules">Size Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pointer-rules">Pointer Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pdi-registers">PDI Registers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#status-register">Status Register</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reset-register">Reset Register</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#control-register">Control Register</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#native-pdi-protocol">Native PDI protocol</a></li>
@@ -316,8 +324,68 @@ The opcode has the form:</p>
 <p>PP defines an addressing form given by the <a class="reference external" href="#pointer-rules">pointer rules section</a> below.
 BB follows the <a class="reference external" href="#size-rules">size rules section</a> below</p>
 </div>
+<div class="section" id="ldcs">
+<h3>LDCS<a class="headerlink" href="#ldcs" title="Permalink to this headline">¶</a></h3>
+<p>The LDCS instruction allows reading of the PDI internal registers. PDI uses a 16-register stackless “CPU” (it’s not a CPU but close enough for this). See <a class="reference external" href="#pdi-registers">PDI registers</a> below for more information on these registers.
+They are encoded numerically in order in the bottom half of the instruction, which has the form:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>8</p></th>
+<th class="head"><p>7</p></th>
+<th class="head"><p>6</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>1</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>R</p></td>
+<td><p>R</p></td>
+<td><p>R</p></td>
+</tr>
+</tbody>
+</table>
+<p>RRRR defines which register to read.</p>
+</div>
+<div class="section" id="stcs">
+<h3>STCS<a class="headerlink" href="#stcs" title="Permalink to this headline">¶</a></h3>
+<p>The STCS instruction allows writing to the PDI internal registsers. See <a class="reference external" href="#pdi-registers">PDI registers</a> below for more information on these registers.
+They are encoded numerically inorder in the bottom half of the instruction, which has the form:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>8</p></th>
+<th class="head"><p>7</p></th>
+<th class="head"><p>6</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>1</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>R</p></td>
+<td><p>R</p></td>
+<td><p>R</p></td>
+<td><p>R</p></td>
+</tr>
+</tbody>
+</table>
+<p>RRRR defines which register to write.</p>
+</div>
 <div class="section" id="size-rules">
-<h3>Size rules<a class="headerlink" href="#size-rules" title="Permalink to this headline">¶</a></h3>
+<h3>Size Rules<a class="headerlink" href="#size-rules" title="Permalink to this headline">¶</a></h3>
 <p>There are two size types (A and B) in the official protocol documentation.. however, they’re identical so we only document them once here. A is always used for address length encoding, and B for data.</p>
 <p>The 2-bit value defines the number of bytes that follow the instruction for the specific type of value following.
 When present the A value is transmitted first, then the B.</p>
@@ -345,7 +413,7 @@ When present the A value is transmitted first, then the B.</p>
 </table>
 </div>
 <div class="section" id="pointer-rules">
-<h3>Pointer rules<a class="headerlink" href="#pointer-rules" title="Permalink to this headline">¶</a></h3>
+<h3>Pointer Rules<a class="headerlink" href="#pointer-rules" title="Permalink to this headline">¶</a></h3>
 <p>The pointer register and all access for it are encoded in the LD and ST instructions with the following form:</p>
 <table class="colwidths-auto docutils align-default">
 <thead>
@@ -369,6 +437,267 @@ When present the A value is transmitted first, then the B.</p>
 </tbody>
 </table>
 <p><strong>NB</strong>: The pointer register is written to by all direct addressing instructions which is undocumented by the datasheets and has a profound impact on the instruction ordering that must be kept.</p>
+</div>
+<div class="section" id="pdi-registers">
+<h3>PDI Registers<a class="headerlink" href="#pdi-registers" title="Permalink to this headline">¶</a></h3>
+<p>The PDI “CPU” has 16 internal 8-bit registers.
+Some of these are documented, others are “reserved” (they may actually be unused, but it’s unclear at this time if they are or if they’re not just additional special-function CSRs).
+All of these registers are CSRs that define status for and control how debug and programming will run.</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>Register#</p></th>
+<th class="text-align:left head"><p>Alias</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>0 0 0 0</p></td>
+<td class="text-align:left"><p>status</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0 0 0 1</p></td>
+<td class="text-align:left"><p>reset</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0 0 1 0</p></td>
+<td class="text-align:left"><p>control</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0 0 1 1</p></td>
+<td class="text-align:left"><p>r3</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0 1 0 0</p></td>
+<td class="text-align:left"><p>r4</p></td>
+</tr>
+</tbody>
+</table>
+<p>The rest are “reserved”.</p>
+<div class="section" id="status-register">
+<h4>Status Register<a class="headerlink" href="#status-register" title="Permalink to this headline">¶</a></h4>
+<p>The status register’s bits have the following meanings assigned to them:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>8</p></th>
+<th class="text-align:center head"><p>7</p></th>
+<th class="text-align:center head"><p>6</p></th>
+<th class="text-align:center head"><p>5</p></th>
+<th class="text-align:center head"><p>4</p></th>
+<th class="text-align:center head"><p>3</p></th>
+<th class="text-align:center head"><p>2</p></th>
+<th class="text-align:center head"><p>1</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>DBGEN</p></td>
+<td class="text-align:center"><p>NVMEN</p></td>
+<td class="text-align:center"><p>-</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R/W</p></td>
+<td class="text-align:center"><p>R/W</p></td>
+<td class="text-align:center"><p>R</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p>The bottom row defines the reset state of this register.</p>
+<ul class="simple">
+<li><p>NVMEN is the Flash/EEPROM Non-Voltile Memory access enable</p></li>
+<li><p>DBGEN is the debugger PDI component enable</p></li>
+</ul>
+<p>These bits cannot be written high - this operation is acomplished using the key instruction.
+Writing a 0 to an enable bit disables that specific function, writing a 1 preserves its current state.</p>
+</div>
+<div class="section" id="reset-register">
+<h4>Reset Register<a class="headerlink" href="#reset-register" title="Permalink to this headline">¶</a></h4>
+<p>The reset register is both a control and status register. It has two meanings.</p>
+<p>As a control register (write) it means:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>8</p></th>
+<th class="text-align:center head"><p>7</p></th>
+<th class="text-align:center head"><p>6</p></th>
+<th class="text-align:center head"><p>5</p></th>
+<th class="text-align:center head"><p>4</p></th>
+<th class="text-align:center head"><p>3</p></th>
+<th class="text-align:center head"><p>2</p></th>
+<th class="text-align:center head"><p>1</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>RESET</p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>R/W</p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p>As a status register (read) it means:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>8</p></th>
+<th class="text-align:center head"><p>7</p></th>
+<th class="text-align:center head"><p>6</p></th>
+<th class="text-align:center head"><p>5</p></th>
+<th class="text-align:center head"><p>4</p></th>
+<th class="text-align:center head"><p>3</p></th>
+<th class="text-align:center head"><p>2</p></th>
+<th class="text-align:center head"><p>1</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>RESET</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R/W</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p>Writing 0x59 to this register puts the device in reset, wiht a caviat as given below.
+Writing to a value other than this (such as 0) takes the device back out of reset.</p>
+<p>When DBGEN is 1 in the status register, the operation of this register is modified to, instead of causing a full reset, only cause a device halt. This is how pause/resume is acomplished in combination with r3/r4.
+When not held in reset-pause by this register, it is still possible for the main CPU to not be running as a result of r3/r4 state. This is covered in their documentation sections.</p>
+</div>
+<div class="section" id="control-register">
+<h4>Control Register<a class="headerlink" href="#control-register" title="Permalink to this headline">¶</a></h4>
+<p>This control register is used to control turn-around timings for the <span class="xref myst">native physical protocol</span>.
+The register’s bits have the following meanings assigned to them:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>8</p></th>
+<th class="text-align:center head"><p>7</p></th>
+<th class="text-align:center head"><p>6</p></th>
+<th class="text-align:center head"><p>5</p></th>
+<th class="text-align:center head"><p>4</p></th>
+<th class="text-align:center head"><p>3</p></th>
+<th class="text-align:center head"><p>2</p></th>
+<th class="text-align:center head"><p>1</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>GUARDTIME</p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R/W</p></td>
+<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p></p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>GUARDTIME specifies the number of idle bits of guard time inserted between PDI RX and TX direction changes. It defaults to 128 bits, and what the bits mean is determined by the table below:</p></li>
+</ul>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>GUARDTIME</p></th>
+<th class="text-align:left head"><p>number of idle bits</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>0 0 0</p></td>
+<td class="text-align:left"><p>128</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0 0 1</p></td>
+<td class="text-align:left"><p>64</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0 1 0</p></td>
+<td class="text-align:left"><p>32</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0 1 1</p></td>
+<td class="text-align:left"><p>16</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>1 0 0</p></td>
+<td class="text-align:left"><p>8</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>1 0 1</p></td>
+<td class="text-align:left"><p>4</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>1 1 0</p></td>
+<td class="text-align:left"><p>2</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>1 1 1</p></td>
+<td class="text-align:left"><p>2</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div class="section" id="native-pdi-protocol">
