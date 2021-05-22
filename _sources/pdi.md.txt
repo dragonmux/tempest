@@ -15,7 +15,7 @@ The opcode has the form:
 |---|---|---|---|---|---|---|---|
 | 0 | 0 | 0 | 0 | A | A | B | B |
 
-AA and BB follow the [size rules](#Size-rules) below
+AA and BB follow the [size rules](#size-rules) below
 
 ### LD
 
@@ -26,16 +26,31 @@ The opcode has the form:
 |---|---|---|---|---|---|---|---|
 | 0 | 0 | 1 | 0 | P | P | B | B |
 
-PP defines an addressing form given by the following table:
+PP defines an addressing form given by the [pointer rules section](#pointer-rules) below.
+BB follows the [size rules section](#size-rules) below
 
-| Value |      Meaning     |
-| :---: |:-----------------|
-|  0 0  | *ptr             |
-|  0 1  | *(ptr++)         |
-|  1 0  | ptr              |
-|  1 1  | ptr++ (reserved) |
+### STS
 
-BB follows the [size rules](#Size-rules) below
+The STS instruction stores up to 4 bytes of data to a given direct address.
+The opcode has the form:
+
+| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+|---|---|---|---|---|---|---|---|
+| 0 | 1 | 0 | 0 | A | A | B | B |
+
+AA and BB follow the [size rules](#size-rules) below
+
+### ST
+
+The ST instruction stores up to 4 bytes of data to the address given by the internal indirect addressing `ptr` register which can only be directly written to by this instruction.
+The opcode has the form:
+
+| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+|---|---|---|---|---|---|---|---|
+| 0 | 1 | 1 | 0 | P | P | B | B |
+
+PP defines an addressing form given by the [pointer rules section](#pointer-rules) below.
+BB follows the [size rules section](#size-rules) below
 
 ### Size rules
 
@@ -52,6 +67,19 @@ The following table defines the possible bit values and their meanings:
 |  0 1  | 2 bytes |
 |  1 0  | 3 bytes |
 |  1 1  | 4 bytes |
+
+### Pointer rules
+
+The pointer register and all access for it are encoded in the LD and ST instructions with the following form:
+
+| Value |      Meaning     |
+| :---: |:-----------------|
+|  0 0  | *ptr             |
+|  0 1  | *(ptr++)         |
+|  1 0  | ptr              |
+|  1 1  | ptr++ (reserved) |
+
+**NB**: The pointer register is written to by all direct addressing instructions which is undocumented by the datasheets and has a profound impact on the instruction ordering that must be kept.
 
 ## Native PDI protocol
 
