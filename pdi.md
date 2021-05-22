@@ -15,7 +15,7 @@ The opcode has the form:
 |---|---|---|---|---|---|---|---|
 | 0 | 0 | 0 | 0 | A | A | B | B |
 
-AA and BB follow the [size rules](#Size-rules) below
+AA and BB follow the [size rules](#size-rules) below
 
 ### LD
 
@@ -35,7 +35,7 @@ PP defines an addressing form given by the following table:
 |  1 0  | ptr              |
 |  1 1  | ptr++ (reserved) |
 
-BB follows the [size rules](#Size-rules) below
+BB follows the [size rules](#size-rules) below
 
 ### Size rules
 
