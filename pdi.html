@@ -183,22 +183,83 @@
 <h3>LDS<a class="headerlink" href="#lds" title="Permalink to this headline">¶</a></h3>
 <p>The LDS instruction loads up to 4 bytes of data from a given direct address and sends it back to the host.
 The opcode has the form:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+-------+---+-----+-----+</span>
-<span class="o">|</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="n">A</span> <span class="n">A</span> <span class="o">|</span> <span class="n">B</span> <span class="n">B</span> <span class="o">|</span>
-<span class="o">+-------+---+-----+-----+</span>
-</pre></div>
-</div>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>8</p></th>
+<th class="head"><p>7</p></th>
+<th class="head"><p>6</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>1</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>A</p></td>
+<td><p>A</p></td>
+<td><p>B</p></td>
+<td><p>B</p></td>
+</tr>
+</tbody>
+</table>
 <p>AA and BB follow the <a class="reference external" href="#Size-rules">size rules</a> below</p>
 </div>
 <div class="section" id="ld">
 <h3>LD<a class="headerlink" href="#ld" title="Permalink to this headline">¶</a></h3>
 <p>The LD instruction loads up to 4 bytes of data from the address given by the internal indirect addressing <code class="docutils literal notranslate"><span class="pre">ptr</span></code> register which can only be read by this instruction.
 The opcode has the form:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+-------+---+-----+-----+</span>
-<span class="o">|</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="n">P</span> <span class="n">P</span> <span class="o">|</span> <span class="n">B</span> <span class="n">B</span> <span class="o">|</span>
-<span class="o">+-------+---+-----+-----+</span>
-</pre></div>
-</div>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>8</p></th>
+<th class="head"><p>7</p></th>
+<th class="head"><p>6</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>1</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>P</p></td>
+<td><p>P</p></td>
+<td><p>B</p></td>
+<td><p>B</p></td>
+</tr>
+</tbody>
+</table>
+<p>PP defines an addressing form given by the following table:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>Value</p></th>
+<th class="text-align:left head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>0 0</p></td>
+<td class="text-align:left"><p>*ptr</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0 1</p></td>
+<td class="text-align:left"><p>*(ptr++)</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>1 0</p></td>
+<td class="text-align:left"><p>ptr</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>1 1</p></td>
+<td class="text-align:left"><p>ptr++ (reserved)</p></td>
+</tr>
+</tbody>
+</table>
+<p>BB follows the <a class="reference external" href="#Size-rules">size rules</a> below</p>
 </div>
 <div class="section" id="size-rules">
 <h3>Size rules<a class="headerlink" href="#size-rules" title="Permalink to this headline">¶</a></h3>
@@ -206,16 +267,27 @@ The opcode has the form:</p>
 <p>The 2-bit value defines the number of bytes that follow the instruction for the specific type of value following.
 When present the A value is transmitted first, then the B.</p>
 <p>The following table defines the possible bit values and their meanings:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+-------+---------+</span>
-<span class="o">|</span> <span class="n">Value</span> <span class="o">|</span> <span class="n">Meaning</span> <span class="o">|</span>
-<span class="o">+-------+---------+</span>
-<span class="o">|</span>  <span class="mi">0</span> <span class="mi">0</span>  <span class="o">|</span> <span class="mi">1</span> <span class="n">byte</span>  <span class="o">|</span>
-<span class="o">|</span>  <span class="mi">0</span> <span class="mi">1</span>  <span class="o">|</span> <span class="mi">2</span> <span class="nb">bytes</span> <span class="o">|</span>
-<span class="o">|</span>  <span class="mi">1</span> <span class="mi">0</span>  <span class="o">|</span> <span class="mi">3</span> <span class="nb">bytes</span> <span class="o">|</span>
-<span class="o">|</span>  <span class="mi">1</span> <span class="mi">1</span>  <span class="o">|</span> <span class="mi">4</span> <span class="nb">bytes</span> <span class="o">|</span>
-<span class="o">+-------+---------+</span>
-</pre></div>
-</div>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>Value</p></th>
+<th class="text-align:left head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>0 0</p></td>
+<td class="text-align:left"><p>1 byte</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0 1</p></td>
+<td class="text-align:left"><p>2 bytes</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>1 0</p></td>
+<td class="text-align:left"><p>3 bytes</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>1 1</p></td>
+<td class="text-align:left"><p>4 bytes</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="section" id="native-pdi-protocol">
