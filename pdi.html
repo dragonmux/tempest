@@ -87,6 +87,18 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">PDI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#what-is-pdi">What is PDI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-component-in-the-mcu">The component in the MCU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-instruction-set">The instruction set</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lds">LDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ld">LD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#size-rules">Size rules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#native-pdi-protocol">Native PDI protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jtag-pdi-protocol">JTAG-PDI protocol</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="memory.html">Memory Map</a></li>
 <li class="toctree-l1"><a class="reference internal" href="programming.html">Programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="debugging/single-stepping.html">Single Stepping</a></li>
@@ -159,8 +171,79 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="pdi">
+  <p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; Updated upstream</p>
+<div class="section" id="pdi">
 <h1>PDI<a class="headerlink" href="#pdi" title="Permalink to this headline">¶</a></h1>
+<p>=======</p>
+</div>
+<div class="section" id="what-is-pdi">
+<h1>What is PDI<a class="headerlink" href="#what-is-pdi" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-component-in-the-mcu">
+<h2>The component in the MCU<a class="headerlink" href="#the-component-in-the-mcu" title="Permalink to this headline">¶</a></h2>
+<p>What if I told you that PDI was more than just a meer communications protocol? What if I told you that it was a complex state machine, so complex in fact that it could nearly be mistaken for a processor.. Well, I would be telling the truth.</p>
+</div>
+<div class="section" id="the-instruction-set">
+<h2>The instruction set<a class="headerlink" href="#the-instruction-set" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="lds">
+<h3>LDS<a class="headerlink" href="#lds" title="Permalink to this headline">¶</a></h3>
+<p>The LDS instruction loads up to 4 bytes of data from a given direct address and sends it back to the host.
+The opcode has the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+-------+---+-----+-----+</span>
+<span class="o">|</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="n">A</span> <span class="n">A</span> <span class="o">|</span> <span class="n">B</span> <span class="n">B</span> <span class="o">|</span>
+<span class="o">+-------+---+-----+-----+</span>
+</pre></div>
+</div>
+<p>AA and BB follow the <a class="reference external" href="#Size-rules">size rules</a> below</p>
+</div>
+<div class="section" id="ld">
+<h3>LD<a class="headerlink" href="#ld" title="Permalink to this headline">¶</a></h3>
+<p>The LD instruction loads up to 4 bytes of data from the address given by the internal indirect addressing <code class="docutils literal notranslate"><span class="pre">ptr</span></code> register which can only be read by this instruction.
+The opcode has the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+-------+---+-----+-----+</span>
+<span class="o">|</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="n">P</span> <span class="n">P</span> <span class="o">|</span> <span class="n">B</span> <span class="n">B</span> <span class="o">|</span>
+<span class="o">+-------+---+-----+-----+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="size-rules">
+<h3>Size rules<a class="headerlink" href="#size-rules" title="Permalink to this headline">¶</a></h3>
+<p>There are two size types (A and B) in the official protocol documentation.. however, they’re identical so we only document them once here. A is always used for address length encoding, and B for data.</p>
+<p>The 2-bit value defines the number of bytes that follow the instruction for the specific type of value following.
+When present the A value is transmitted first, then the B.</p>
+<p>The following table defines the possible bit values and their meanings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">+-------+---------+</span>
+<span class="o">|</span> <span class="n">Value</span> <span class="o">|</span> <span class="n">Meaning</span> <span class="o">|</span>
+<span class="o">+-------+---------+</span>
+<span class="o">|</span>  <span class="mi">0</span> <span class="mi">0</span>  <span class="o">|</span> <span class="mi">1</span> <span class="n">byte</span>  <span class="o">|</span>
+<span class="o">|</span>  <span class="mi">0</span> <span class="mi">1</span>  <span class="o">|</span> <span class="mi">2</span> <span class="nb">bytes</span> <span class="o">|</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="mi">0</span>  <span class="o">|</span> <span class="mi">3</span> <span class="nb">bytes</span> <span class="o">|</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="mi">1</span>  <span class="o">|</span> <span class="mi">4</span> <span class="nb">bytes</span> <span class="o">|</span>
+<span class="o">+-------+---------+</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="native-pdi-protocol">
+<h2>Native PDI protocol<a class="headerlink" href="#native-pdi-protocol" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="jtag-pdi-protocol">
+<h2>JTAG-PDI protocol<a class="headerlink" href="#jtag-pdi-protocol" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><p>Stashed changes</p>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div>
 </div>
 
 
