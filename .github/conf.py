@@ -20,6 +20,7 @@ extensions = [
 	'sphinx.ext.githubpages',
 	'sphinx.ext.graphviz',
 	'sphinx.ext.autosectionlabel',
+	'sphinxcontrib.mermaid',
 	'sphinx_rtd_theme',
 	'myst_parser',
 ]
