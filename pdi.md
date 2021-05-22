@@ -11,11 +11,9 @@ What if I told you that PDI was more than just a meer communications protocol? W
 The LDS instruction loads up to 4 bytes of data from a given direct address and sends it back to the host.
 The opcode has the form:
 
-```
-+-------+---+-----+-----+
-| 0 0 0 | 0 | A A | B B |
-+-------+---+-----+-----+
-```
+| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+|---|---|---|---|---|---|---|---|
+| 0 | 0 | 0 | 0 | A | A | B | B |
 
 AA and BB follow the [size rules](#Size-rules) below
 
@@ -24,11 +22,9 @@ AA and BB follow the [size rules](#Size-rules) below
 The LD instruction loads up to 4 bytes of data from the address given by the internal indirect addressing `ptr` register which can only be read by this instruction.
 The opcode has the form:
 
-```
-+-------+---+-----+-----+
-| 0 0 1 | 0 | P P | B B |
-+-------+---+-----+-----+
-```
+| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+|---|---|---|---|---|---|---|---|
+| 0 | 0 | 1 | 0 | P | P | B | B |
 
 ### Size rules
 
@@ -39,16 +35,12 @@ When present the A value is transmitted first, then the B.
 
 The following table defines the possible bit values and their meanings:
 
-```
-+-------+---------+
 | Value | Meaning |
-+-------+---------+
+|-------|---------|
 |  0 0  | 1 byte  |
 |  0 1  | 2 bytes |
 |  1 0  | 3 bytes |
 |  1 1  | 4 bytes |
-+-------+---------+
-```
 
 ## Native PDI protocol
 
