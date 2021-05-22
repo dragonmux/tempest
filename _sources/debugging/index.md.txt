@@ -1,11 +1,5 @@
-```{toctree}
-:hidden:
-:glob:
+# Debugging using PDI
 
-*
-```
-
-# Debugging
 
 ## Getting started
 
@@ -27,4 +21,7 @@ ldcs status
 ```pdi
 key debug
 ldcs status
+```
+
+```{include} single-stepping.md
 ```
