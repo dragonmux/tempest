@@ -79,6 +79,8 @@ The pointer register and all access for it are encoded in the LD and ST instruct
 |  1 0  | ptr              |
 |  1 1  | ptr++ (reserved) |
 
+**NB**: The pointer register is written to by all direct addressing instructions which is undocumented by the datasheets and has a profound impact on the instruction ordering that must be kept.
+
 ## Native PDI protocol
 
 ## JTAG-PDI protocol
