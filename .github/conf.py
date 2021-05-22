@@ -43,6 +43,8 @@ exclude_patterns = [
 graphviz_output_format = 'svg'
 
 html_theme = 'sphinx_rtd_theme'
-# html_sidebars = { '**': ['about.html', 'relations.html', 'navigation.html'] }
+html_theme_options = {
+    "collapse_navigation" : False
+}
 
 autosectionlabel_prefix_document = True
