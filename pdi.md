@@ -26,16 +26,8 @@ The opcode has the form:
 |---|---|---|---|---|---|---|---|
 | 0 | 0 | 1 | 0 | P | P | B | B |
 
-PP defines an addressing form given by the following table:
-
-| Value |      Meaning     |
-| :---: |:-----------------|
-|  0 0  | *ptr             |
-|  0 1  | *(ptr++)         |
-|  1 0  | ptr              |
-|  1 1  | ptr++ (reserved) |
-
-BB follows the [size rules](#size-rules) below
+PP defines an addressing form given by the [pointer rules section](#pointer-rules) below.
+BB follows the [size rules section](#size-rules) below
 
 ### Size rules
 
@@ -52,6 +44,17 @@ The following table defines the possible bit values and their meanings:
 |  0 1  | 2 bytes |
 |  1 0  | 3 bytes |
 |  1 1  | 4 bytes |
+
+### Pointer rules
+
+The pointer register and all access for it are encoded in the LD and ST instructions with the following form:
+
+| Value |      Meaning     |
+| :---: |:-----------------|
+|  0 0  | *ptr             |
+|  0 1  | *(ptr++)         |
+|  1 0  | ptr              |
+|  1 1  | ptr++ (reserved) |
 
 ## Native PDI protocol
 
