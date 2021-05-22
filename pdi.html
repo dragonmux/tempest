@@ -95,7 +95,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#sts">STS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#st">ST</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ldcs">LDCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#repeat">REPEAT</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#stcs">STCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#key">KEY</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#size-rules">Size Rules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pointer-rules">Pointer Rules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pdi-registers">PDI Registers</a><ul>
@@ -202,6 +204,7 @@
 </div>
 <div class="section" id="the-instruction-set">
 <h2>The instruction set<a class="headerlink" href="#the-instruction-set" title="Permalink to this headline">¶</a></h2>
+<p>All values transmitted as part of instructions and their effects are transmitted in LSB-first (Little Endian) byte order.</p>
 <div class="section" id="lds">
 <h3>LDS<a class="headerlink" href="#lds" title="Permalink to this headline">¶</a></h3>
 <p>The LDS instruction loads up to 4 bytes of data from a given direct address and sends it back to the host.
@@ -322,7 +325,7 @@ The opcode has the form:</p>
 </tbody>
 </table>
 <p>PP defines an addressing form given by the <a class="reference external" href="#pointer-rules">pointer rules section</a> below.
-BB follows the <a class="reference external" href="#size-rules">size rules section</a> below</p>
+BB follows</p>
 </div>
 <div class="section" id="ldcs">
 <h3>LDCS<a class="headerlink" href="#ldcs" title="Permalink to this headline">¶</a></h3>
@@ -354,6 +357,36 @@ They are encoded numerically in order in the bottom half of the instruction, whi
 </table>
 <p>RRRR defines which register to read.</p>
 </div>
+<div class="section" id="repeat">
+<h3>REPEAT<a class="headerlink" href="#repeat" title="Permalink to this headline">¶</a></h3>
+<p>The REPEAT instruction specifies that the next instruction(!) is to be repeated N times after initial execution, where N is specified in the bytes following this instruction.
+The opcode has the following form:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>8</p></th>
+<th class="head"><p>7</p></th>
+<th class="head"><p>6</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>1</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>B</p></td>
+<td><p>B</p></td>
+</tr>
+</tbody>
+</table>
+<p>BB follows the <a class="reference external" href="#size-rules">size rules section</a> below and specifies how many bytes follow this instruction to be 0-padded and loaded into the PDI repeat register</p>
+</div>
 <div class="section" id="stcs">
 <h3>STCS<a class="headerlink" href="#stcs" title="Permalink to this headline">¶</a></h3>
 <p>The STCS instruction allows writing to the PDI internal registsers. See <a class="reference external" href="#pdi-registers">PDI registers</a> below for more information on these registers.
@@ -383,6 +416,41 @@ They are encoded numerically inorder in the bottom half of the instruction, whic
 </tbody>
 </table>
 <p>RRRR defines which register to write.</p>
+</div>
+<div class="section" id="key">
+<h3>KEY<a class="headerlink" href="#key" title="Permalink to this headline">¶</a></h3>
+<p>The KEY instruction is used to unlock special functions of the PDI controller.
+The opcode has the following form:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>8</p></th>
+<th class="head"><p>7</p></th>
+<th class="head"><p>6</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>1</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p>8 bytes follow the key instruction and provide a special unlocking value for the feature you wish to unlock.
+There are two known key value constants which are:</p>
+<ul class="simple">
+<li><p>NVM - 0x1289ab45cdd888ff</p></li>
+<li><p>Debug - 0x3a212dd49f7c8121</p></li>
+</ul>
 </div>
 <div class="section" id="size-rules">
 <h3>Size Rules<a class="headerlink" href="#size-rules" title="Permalink to this headline">¶</a></h3>
@@ -610,7 +678,7 @@ Writing a 0 to an enable bit disables that specific function, writing a 1 preser
 </tr>
 </tbody>
 </table>
-<p>Writing 0x59 to this register puts the device in reset, wiht a caviat as given below.
+<p>Writing 0x59 to this register puts the device in reset, with a caviat as given below.
 Writing to a value other than this (such as 0) takes the device back out of reset.</p>
 <p>When DBGEN is 1 in the status register, the operation of this register is modified to, instead of causing a full reset, only cause a device halt. This is how pause/resume is acomplished in combination with r3/r4.
 When not held in reset-pause by this register, it is still possible for the main CPU to not be running as a result of r3/r4 state. This is covered in their documentation sections.</p>
