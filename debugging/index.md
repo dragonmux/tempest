@@ -5,7 +5,7 @@
 *
 ```
 
-# Debugging using PDI
+# Debugging
 
 ## Getting started
 
@@ -28,7 +28,3 @@ ldcs status
 key debug
 ldcs status
 ```
-
-
-
-
