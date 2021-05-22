@@ -215,6 +215,21 @@ The register's bits have the following meanings assigned to them:
 |   1 1 0   | 2                   |
 |   1 1 1   | 2                   |
 
+#### Register r3
+
+This status regsiter indicates the current state of the debug engine when enabled (otherwise it reads as 0)
+
+| 8 | 7 | 6 |   5   |   4   | 3 | 2 | 1 |
+|:-:|:-:|:-:|:-----:|:-----:|:-:|:-:|:-:|
+| - | - | - | RESET | PAUSE | - | - | - |
+| R | R | R |   R   |   R   | R | R | R |
+| 0 | 0 | 0 |   0   |   0   | 0 | 0 | 0 |
+
+* The RESET bit indicates whether the processor is currently held in reset and is sort-of a duplicate of the RESET bit from the reset CSR.
+* The PAUSE bit indicates whether the processor is currently held in execution pause.
+
+#### Register r4
+
 ## Native PDI protocol
 
 ## JTAG-PDI protocol

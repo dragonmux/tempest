@@ -104,6 +104,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#status-register">Status Register</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#reset-register">Reset Register</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#control-register">Control Register</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#register-r3">Register r3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#register-r4">Register r4</a></li>
 </ul>
 </li>
 </ul>
@@ -768,6 +770,59 @@ The register’s bits have the following meanings assigned to them:</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="register-r3">
+<h4>Register r3<a class="headerlink" href="#register-r3" title="Permalink to this headline">¶</a></h4>
+<p>This status regsiter indicates the current state of the debug engine when enabled (otherwise it reads as 0)</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>8</p></th>
+<th class="text-align:center head"><p>7</p></th>
+<th class="text-align:center head"><p>6</p></th>
+<th class="text-align:center head"><p>5</p></th>
+<th class="text-align:center head"><p>4</p></th>
+<th class="text-align:center head"><p>3</p></th>
+<th class="text-align:center head"><p>2</p></th>
+<th class="text-align:center head"><p>1</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>RESET</p></td>
+<td class="text-align:center"><p>PAUSE</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+<td class="text-align:center"><p>-</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+<td class="text-align:center"><p>R</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>The RESET bit indicates whether the processor is currently held in reset and is sort-of a duplicate of the RESET bit from the reset CSR.</p></li>
+<li><p>The PAUSE bit indicates whether the processor is currently held in execution pause.</p></li>
+</ul>
+</div>
+<div class="section" id="register-r4">
+<h4>Register r4<a class="headerlink" href="#register-r4" title="Permalink to this headline">¶</a></h4>
 </div>
 </div>
 </div>
