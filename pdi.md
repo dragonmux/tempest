@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-# PDI
-=======
 # What is PDI
 
 ## The component in the MCU
@@ -56,4 +53,3 @@ The following table defines the possible bit values and their meanings:
 ## Native PDI protocol
 
 ## JTAG-PDI protocol
->>>>>>> Stashed changes
