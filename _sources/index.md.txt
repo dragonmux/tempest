@@ -1,4 +1,6 @@
 ```{toctree}
+:hidden:
+
 pdi
 memory
 programming
