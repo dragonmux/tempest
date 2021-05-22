@@ -6,6 +6,8 @@ What if I told you that PDI was more than just a meer communications protocol? W
 
 ## The instruction set
 
+All values transmitted as part of instructions and their effects are transmitted in LSB-first (Little Endian) byte order.
+
 ### LDS
 
 The LDS instruction loads up to 4 bytes of data from a given direct address and sends it back to the host.
@@ -73,6 +75,21 @@ They are encoded numerically inorder in the bottom half of the instruction, whic
 | 1 | 1 | 0 | 0 | R | R | R | R |
 
 RRRR defines which register to write.
+
+### KEY
+
+The KEY instruction is used to unlock special functions of the PDI controller.
+The opcode has the following form:
+
+| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+|---|---|---|---|---|---|---|---|
+| 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
+
+8 bytes follow the key instruction and provide a special unlocking value for the feature you wish to unlock.
+There are two known key value constants which are:
+
+* NVM - 0x1289ab45cdd888ff
+* Debug - 0x3a212dd49f7c8121
 
 ### Size Rules
 
@@ -157,7 +174,7 @@ As a status register (read) it means:
 | R | R | R | R | R | R | R |  R/W  |
 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |   0   |
 
-Writing 0x59 to this register puts the device in reset, wiht a caviat as given below.
+Writing 0x59 to this register puts the device in reset, with a caviat as given below.
 Writing to a value other than this (such as 0) takes the device back out of reset.
 
 When DBGEN is 1 in the status register, the operation of this register is modified to, instead of causing a full reset, only cause a device halt. This is how pause/resume is acomplished in combination with r3/r4.
