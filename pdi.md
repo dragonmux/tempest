@@ -163,6 +163,30 @@ Writing to a value other than this (such as 0) takes the device back out of rese
 When DBGEN is 1 in the status register, the operation of this register is modified to, instead of causing a full reset, only cause a device halt. This is how pause/resume is acomplished in combination with r3/r4.
 When not held in reset-pause by this register, it is still possible for the main CPU to not be running as a result of r3/r4 state. This is covered in their documentation sections.
 
+#### Control Register
+
+This control register is used to control turn-around timings for the [native physical protocol](native-pdi-protocol).
+The register's bits have the following meanings assigned to them:
+
+| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| - | - | - | - | - | GUARDTIME |
+| R | R | R | R | R |    R/W    |
+| 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+* GUARDTIME specifies the number of idle bits of guard time inserted between PDI RX and TX direction changes. It defaults to 128 bits, and what the bits mean is determined by the table below:
+
+| GUARDTIME | number of idle bits |
+| :-------: |:--------------------|
+|   0 0 0   | 128                 |
+|   0 0 1   | 64                  |
+|   0 1 0   | 32                  |
+|   0 1 1   | 16                  |
+|   1 0 0   | 8                   |
+|   1 0 1   | 4                   |
+|   1 1 0   | 2                   |
+|   1 1 1   | 2                   |
+
 ## Native PDI protocol
 
 ## JTAG-PDI protocol
