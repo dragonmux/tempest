@@ -129,7 +129,9 @@ The pointer register and all access for it are encoded in the LD and ST instruct
 |  1 0  | ptr              |
 |  1 1  | ptr++ (reserved) |
 
-**NB**: The pointer register is written to by all direct addressing instructions which is undocumented by the datasheets and has a profound impact on the instruction ordering that must be kept.
+```{note}
+The pointer register is written to by all direct addressing instructions which is undocumented by the datasheets and has a profound impact on the instruction ordering that must be kept.
+```
 
 ### PDI Registers
 
@@ -193,7 +195,7 @@ When not held in reset-pause by this register, it is still possible for the main
 
 #### Control Register
 
-This control register is used to control turn-around timings for the [native physical protocol](native-pdi-protocol).
+This control register is used to control turn-around timings for the [native physical protocol](#native-pdi-protocol).
 The register's bits have the following meanings assigned to them:
 
 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |

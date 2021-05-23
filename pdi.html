@@ -123,7 +123,6 @@
 <li class="toctree-l3"><a class="reference internal" href="debugging/index.html#turn-the-debug-interface-on">Turn the debug interface on</a></li>
 <li class="toctree-l3"><a class="reference internal" href="debugging/index.html#take-the-reset-processor-and-put-it-in-debug-pause-state">Take the reset processor and put it in debug pause state</a></li>
 <li class="toctree-l3"><a class="reference internal" href="debugging/index.html#set-up-run-to-address">Set up run-to-address</a></li>
-<li class="toctree-l3"><a class="reference internal" href="debugging/index.html#single-step-debugging">Single-step debugging</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="debugging/index.html#single-stepping">Single Stepping</a></li>
@@ -509,7 +508,10 @@ When present the A value is transmitted first, then the B.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>NB</strong>: The pointer register is written to by all direct addressing instructions which is undocumented by the datasheets and has a profound impact on the instruction ordering that must be kept.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The pointer register is written to by all direct addressing instructions which is undocumented by the datasheets and has a profound impact on the instruction ordering that must be kept.</p>
+</div>
 </div>
 <div class="section" id="pdi-registers">
 <h3>PDI Registers<a class="headerlink" href="#pdi-registers" title="Permalink to this headline">¶</a></h3>
@@ -690,7 +692,7 @@ When not held in reset-pause by this register, it is still possible for the main
 </div>
 <div class="section" id="control-register">
 <h4>Control Register<a class="headerlink" href="#control-register" title="Permalink to this headline">¶</a></h4>
-<p>This control register is used to control turn-around timings for the <span class="xref myst">native physical protocol</span>.
+<p>This control register is used to control turn-around timings for the <a class="reference external" href="#native-pdi-protocol">native physical protocol</a>.
 The register’s bits have the following meanings assigned to them:</p>
 <table class="colwidths-auto docutils align-default">
 <thead>
