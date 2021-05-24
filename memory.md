@@ -219,5 +219,11 @@ The data memory area maps the main chip memory (MMIO + SRAM) to the PDI address 
 |    USARTF1    |
 +---------------+ <- 0x01000BC0
 |     SPI F     |
++===============+ <- 0x01001000
+|    EEPROM     |
++===============+ <- 0x01002000
+| Internal SRAM |
++===============+ <- 0x01002800
+| External  RAM |
 +===============+ <- 0x02000000
 ```
