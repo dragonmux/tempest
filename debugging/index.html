@@ -130,7 +130,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#running-the-processor-to-an-address">Running the processor to an address</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#set-up-run-to-address">Set up run-to-address</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#set-the-program-counter-to-a-specific-address">Set the program counter to a specific address</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#run-the-program">Run the program</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-program-to-breakpoint">Run the program to breakpoint</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#clean-up">Clean up</a></li>
 </ul>
 </li>
@@ -283,9 +283,10 @@ sts.u8 0x00000048 0x00
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>sts.u32 0x00000004 0x00 0x00 0x00 0x00
 </pre></div>
 </div>
+<p>This writes the program counter, exposed at +0x4, to its POR value</p>
 </div>
-<div class="section" id="run-the-program">
-<h3>Run the program<a class="headerlink" href="#run-the-program" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="run-the-program-to-breakpoint">
+<h3>Run the program to breakpoint<a class="headerlink" href="#run-the-program-to-breakpoint" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>stcs reset 0x00
 sts.u8 0x0000000a 0x00
 stcs r4 0x01
@@ -293,6 +294,14 @@ ldcs r3
 ldcs r3
 </pre></div>
 </div>
+<p>This sequence does the following:</p>
+<ul class="simple">
+<li><p>With r4 poked, releases reset so that at this stage enters the processor into a debugger-supervised state</p></li>
+<li><p>Stores 0x00 to the debug register 0x0000000a which appears to put the processor in run</p></li>
+<li><p>Ensures r4 holds the value 0x01 which ensures the debugger engage bit is set</p></li>
+<li><p>Loads the status of the processor from r3 (should read as 0x14 the first time)</p></li>
+<li><p>Loads the status of the processor again (should read as 0x04 the second time indicating the breakpoint is hit)</p></li>
+</ul>
 </div>
 <div class="section" id="clean-up">
 <h3>Clean up<a class="headerlink" href="#clean-up" title="Permalink to this headline">¶</a></h3>
@@ -300,6 +309,7 @@ ldcs r3
 sts.u8 0x00000048 0x00
 </pre></div>
 </div>
+<p>Cleans up after the debug run by clearing all set breakpoints</p>
 </div>
 </div>
 <div class="section" id="reading-processor-state">
