@@ -115,7 +115,8 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Memory Map</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#breakpoint-units">Breakpoint units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#breakpoint-units">Breakpoint Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-memory">Data Memory</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="programming.html">Programming</a></li>
@@ -263,7 +264,7 @@
 </pre></div>
 </div>
 <div class="section" id="breakpoint-units">
-<h2>Breakpoint units<a class="headerlink" href="#breakpoint-units" title="Permalink to this headline">¶</a></h2>
+<h2>Breakpoint Units<a class="headerlink" href="#breakpoint-units" title="Permalink to this headline">¶</a></h2>
 <p>Breakpoint units have the following memory layout:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+===============+
 | break address | +0x0
@@ -272,6 +273,173 @@
 +---------------+
 |    flags ?    | +0x8
 +===============+
+</pre></div>
+</div>
+</div>
+<div class="section" id="data-memory">
+<h2>Data Memory<a class="headerlink" href="#data-memory" title="Permalink to this headline">¶</a></h2>
+<p>The data memory area maps the main chip memory (MMIO + SRAM) to the PDI address space. This has the following layout:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+===============+ &lt;- 0x01000000
+|   GPIO Regs   |
++---------------+ &lt;- 0x01000010
+|    VPORT 0    |
++---------------+ &lt;- 0x01000014
+|    VPORT 1    |
++---------------+ &lt;- 0x01000018
+|    VPORT 2    |
++---------------+ &lt;- 0x0100001C
+|    VPORT 3    |
++---------------+ &lt;- 0x01000030
+|      CPU      |
++---------------+ &lt;- 0x01000040
+|      CLK      |
++---------------+ &lt;- 0x01000048
+|     SLEEP     |
++---------------+ &lt;- 0x01000050
+|      OSC      |
++---------------+ &lt;- 0x01000060
+|   DFLLRC32M   |
++---------------+ &lt;- 0x01000068
+|   DFLLRC2M    |
++---------------+ &lt;- 0x01000070
+|      PR       |
++---------------+ &lt;- 0x01000078
+|      RST      |
++---------------+ &lt;- 0x01000080
+|      WDT      |
++---------------+ &lt;- 0x01000090
+|      MCU      |
++---------------+ &lt;- 0x010000A0
+|     PMIC      |
++---------------+ &lt;- 0x010000B0
+|    PORTTCFG   |
++---------------+ &lt;- 0x010000C0
+|      AES      |
++---------------+ &lt;- 0x010000D0
+|      CRC      |
++---------------+ &lt;- 0x010000F0
+|     VBAT      |
++---------------+ &lt;- 0x01000100
+|      DMA      |
++---------------+ &lt;- 0x01000180
+|     EVSYS     |
++---------------+ &lt;- 0x010001C0
+|      NVM      |
++---------------+ &lt;- 0x01000200
+|     ADC A     |
++---------------+ &lt;- 0x01000240
+|     ADC B     |
++---------------+ &lt;- 0x01000300
+|     DAC A     |
++---------------+ &lt;- 0x01000320
+|     DAC B     |
++---------------+ &lt;- 0x01000380
+|      ACA      |
++---------------+ &lt;- 0x01000390
+|      ACB      |
++---------------+ &lt;- 0x01000400
+|      RTC      |
++---------------+ &lt;- 0x01000420
+|     RTC32     |
++---------------+ &lt;- 0x01000440
+|      EBI      |
++---------------+ &lt;- 0x01000480
+|     TWI C     |
++---------------+ &lt;- 0x01000490
+|     TWI D     |
++---------------+ &lt;- 0x010004A0
+|     TWI E     |
++---------------+ &lt;- 0x010004B0
+|     TWI F     |
++---------------+ &lt;- 0x010004C0
+|      USB      |
++---------------+ &lt;- 0x01000600
+|     PORTA     |
++---------------+ &lt;- 0x01000620
+|     PORTB     |
++---------------+ &lt;- 0x01000640
+|     PORTC     |
++---------------+ &lt;- 0x01000660
+|     PORTD     |
++---------------+ &lt;- 0x01000680
+|     PORTE     |
++---------------+ &lt;- 0x010006A0
+|     PORTF     |
++---------------+ &lt;- 0x010006E0
+|     PORTH     |
++---------------+ &lt;- 0x01000700
+|     PORTJ     |
++---------------+ &lt;- 0x01000720
+|     PORTK     |
++---------------+ &lt;- 0x010007C0
+|     PORTQ     |
++---------------+ &lt;- 0x010007E0
+|     PORTR     |
++---------------+ &lt;- 0x01000800
+|     TCC 0     |
++---------------+ &lt;- 0x01000840
+|     TCC 1     |
++---------------+ &lt;- 0x01000880
+|     AWEXC     |
++---------------+ &lt;- 0x01000890
+|    HIRES C    |
++---------------+ &lt;- 0x010008A0
+|    USARTC0    |
++---------------+ &lt;- 0x010008B0
+|    USARTC1    |
++---------------+ &lt;- 0x010008C0
+|     SPI C     |
++---------------+ &lt;- 0x010008F8
+|     IRCOM     |
++---------------+ &lt;- 0x01000900
+|     TC D0     |
++---------------+ &lt;- 0x01000940
+|     TC D1     |
++---------------+ &lt;- 0x01000980
+|     AWEXD     |
++---------------+ &lt;- 0x01000990
+|    HIRES D    |
++---------------+ &lt;- 0x010009A0
+|    USARTD0    |
++---------------+ &lt;- 0x010009B0
+|    USARTD1    |
++---------------+ &lt;- 0x010009C0
+|     SPI D     |
++---------------+ &lt;- 0x01000A00
+|     TC E0     |
++---------------+ &lt;- 0x01000A40
+|     TC E1     |
++---------------+ &lt;- 0x01000A80
+|     AWEXE     |
++---------------+ &lt;- 0x01000A90
+|    HIRES E    |
++---------------+ &lt;- 0x01000AA0
+|    USARTE0    |
++---------------+ &lt;- 0x01000AB0
+|    USARTE1    |
++---------------+ &lt;- 0x01000AC0
+|     SPI E     |
++---------------+ &lt;- 0x01000B00
+|     TC F0     |
++---------------+ &lt;- 0x01000B40
+|     TC F1     |
++---------------+ &lt;- 0x01000B80
+|     AWEXF     |
++---------------+ &lt;- 0x01000B90
+|    HIRES F    |
++---------------+ &lt;- 0x01000BA0
+|    USARTF0    |
++---------------+ &lt;- 0x01000BB0
+|    USARTF1    |
++---------------+ &lt;- 0x01000BC0
+|     SPI F     |
++===============+ &lt;- 0x01001000
+|    EEPROM     |
++===============+ &lt;- 0x01002000
+| Internal SRAM |
++===============+ &lt;- 0x01002800
+| External  RAM |
++===============+ &lt;- 0x02000000
 </pre></div>
 </div>
 </div>

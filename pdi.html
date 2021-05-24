@@ -115,7 +115,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="memory.html">Memory Map</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="memory.html#breakpoint-units">Breakpoint units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#breakpoint-units">Breakpoint Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="memory.html#data-memory">Data Memory</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="programming.html">Programming</a></li>
@@ -701,7 +702,7 @@ Writing a 0 to an enable bit disables that specific function, writing a 1 preser
 </tr>
 </tbody>
 </table>
-<p>Writing 0x59 to this register puts the device in reset, with a caviat as given below.
+<p>Writing 0x59 to this register puts the main processor into reset as if asserting the ~RESET pin, with a caviat as given below.
 Writing to a value other than this (such as 0) takes the device back out of reset.</p>
 <p>When DBGEN is 1 in the status register, the operation of this register is modified to, instead of causing a full reset, only cause a device halt. This is how pause/resume is acomplished in combination with r3/r4.
 When not held in reset-pause by this register, it is still possible for the main CPU to not be running as a result of r3/r4 state. This is covered in their documentation sections.</p>
