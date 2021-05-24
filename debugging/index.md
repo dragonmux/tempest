@@ -97,7 +97,7 @@ sts.u16 0x00000028 0x00 0x00
 sts.u8 0x00000048 0x00
 ```
 
-Cleans up after the debug run by clearing all set breakpoints
+Cleans up after the debug run by clearing all set breakpoint flags(? could also be sizes)
 
 ## Reading processor state
 

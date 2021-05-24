@@ -187,7 +187,7 @@ As a status register (read) it means:
 | R | R | R | R | R | R | R |  R/W  |
 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |   0   |
 
-Writing 0x59 to this register puts the device in reset, with a caviat as given below.
+Writing 0x59 to this register puts the main processor into reset as if asserting the ~RESET pin, with a caviat as given below.
 Writing to a value other than this (such as 0) takes the device back out of reset.
 
 When DBGEN is 1 in the status register, the operation of this register is modified to, instead of causing a full reset, only cause a device halt. This is how pause/resume is acomplished in combination with r3/r4.
