@@ -114,7 +114,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../pdi.html#jtag-pdi-protocol">JTAG-PDI protocol</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../memory.html">Memory Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../memory.html">Memory Map</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../memory.html#breakpoint-units">Breakpoint units</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../programming.html">Programming</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Debugging using PDI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting started</a></li>
@@ -122,7 +125,20 @@
 <li class="toctree-l3"><a class="reference internal" href="#put-the-processor-into-reset">Put the processor into reset</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#turn-the-debug-interface-on">Turn the debug interface on</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#take-the-reset-processor-and-put-it-in-debug-pause-state">Take the reset processor and put it in debug pause state</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-processor-to-an-address">Running the processor to an address</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#set-up-run-to-address">Set up run-to-address</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-the-program-counter-to-a-specific-address">Set the program counter to a specific address</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-program">Run the program</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clean-up">Clean up</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-processor-state">Reading processor state</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#read-program-counter-pc-1">Read program counter (PC+1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clean-up-verification">Clean up verification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#read-back-stack-pointer-sreg">Read back Stack Pointer + SREG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verify-state">Verify state</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#single-stepping">Single Stepping</a></li>
@@ -239,6 +255,10 @@ the first LDCS to r3 is used to verify that r3 is presently 0.
 Once reset is released, r3 will initially be 0x14, which should be observed with the second LDCS.
 Once debug setup is completed, r4 will then read as 0x04, which should be observed with the final LDCS.</p>
 </div>
+</div>
+<div class="section" id="running-the-processor-to-an-address">
+<h2>Running the processor to an address<a class="headerlink" href="#running-the-processor-to-an-address" title="Permalink to this headline">¶</a></h2>
+<p>The following uses hardware breakpoint unit 1, however based on documentation murmers it stands there should be 2.</p>
 <div class="section" id="set-up-run-to-address">
 <h3>Set up run-to-address<a class="headerlink" href="#set-up-run-to-address" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>sts.u32 0x00000020 0x29 0x01 0x00 0x00
@@ -257,6 +277,61 @@ sts.u8 0x00000048 0x00
 <li><p>Stores 0x0100 to the first hardware breakpoint unit at its third (16-bit) register at 0x00000028</p></li>
 <li><p>Stores 0x00 to a byte register at 0x00000048 - the purpose for this is not well understood yet but this may be the second hardware breakpoint unit</p></li>
 </ul>
+</div>
+<div class="section" id="set-the-program-counter-to-a-specific-address">
+<h3>Set the program counter to a specific address<a class="headerlink" href="#set-the-program-counter-to-a-specific-address" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>sts.u32 0x00000004 0x00 0x00 0x00 0x00
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-the-program">
+<h3>Run the program<a class="headerlink" href="#run-the-program" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>stcs reset 0x00
+sts.u8 0x0000000a 0x00
+stcs r4 0x01
+ldcs r3
+ldcs r3
+</pre></div>
+</div>
+</div>
+<div class="section" id="clean-up">
+<h3>Clean up<a class="headerlink" href="#clean-up" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>sts.u16 0x00000028 0x00 0x00
+sts.u8 0x00000048 0x00
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="reading-processor-state">
+<h2>Reading processor state<a class="headerlink" href="#reading-processor-state" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="read-program-counter-pc-1">
+<h3>Read program counter (PC+1)<a class="headerlink" href="#read-program-counter-pc-1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>lds.u32 0x00000004
+</pre></div>
+</div>
+</div>
+<div class="section" id="clean-up-verification">
+<h3>Clean up verification<a class="headerlink" href="#clean-up-verification" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>lds.u8 0x00000050
+lds.u8 0x0000000b
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-back-stack-pointer-sreg">
+<h3>Read back Stack Pointer + SREG<a class="headerlink" href="#read-back-stack-pointer-sreg" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>st.u32 ptr 0x0100003d
+repeat 0x02
+ld *(ptr++)
+</pre></div>
+</div>
+</div>
+<div class="section" id="verify-state">
+<h3>Verify state<a class="headerlink" href="#verify-state" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>ldcs r3
+lds.u8 0x010001ca
+lds.u8 0x010001c4
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="single-stepping">

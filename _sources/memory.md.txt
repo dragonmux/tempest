@@ -8,6 +8,13 @@ The ATXMega256A3U PDI controller has the following memory map:
 |   prog ctr   | +0x4
 |  debug ctrl  | +0xa
 |  regs. FIFO  | +0xc
++--------------+ <- 0x00000020
+|  Breakpoint  |
+|    Unit 1    |
++--------------+ <- 0x00000040
+|  Breakpoint  |
+|    Unit 2    |
++--------------+ <- 0x00000060
 |              |
 +--------------+ <- 0x00000100
 |  (reserved)  |
@@ -37,4 +44,18 @@ The ATXMega256A3U PDI controller has the following memory map:
 | (Mapped IO + |
 (     SRAM)    |
 +==============+ <- 0x02000000
+```
+
+## Breakpoint units
+
+Breakpoint units have the following memory layout:
+
+```text
++===============+
+| break address | +0x0
++---------------+
+|    flags ?    | +0x4
++---------------+
+|    flags ?    | +0x8
++===============+
 ```

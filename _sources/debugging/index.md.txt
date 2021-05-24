@@ -41,6 +41,10 @@ the first LDCS to r3 is used to verify that r3 is presently 0.
 Once reset is released, r3 will initially be 0x14, which should be observed with the second LDCS.
 Once debug setup is completed, r4 will then read as 0x04, which should be observed with the final LDCS.
 
+## Running the processor to an address
+
+The following uses hardware breakpoint unit 1, however based on documentation murmers it stands there should be 2.
+
 ### Set up run-to-address
 
 ```pdi
@@ -59,6 +63,60 @@ This sequence performs the following operations (some of them need more figuring
 * Stores 0x00 to a byte register at 0x00000040 (twice) - the purpose for this is not well understood yet but this may be the second hardware breakpoint unit
 * Stores 0x0100 to the first hardware breakpoint unit at its third (16-bit) register at 0x00000028
 * Stores 0x00 to a byte register at 0x00000048 - the purpose for this is not well understood yet but this may be the second hardware breakpoint unit
+
+### Set the program counter to a specific address
+
+```pdi
+sts.u32 0x00000004 0x00 0x00 0x00 0x00
+```
+
+### Run the program
+
+```pdi
+stcs reset 0x00
+sts.u8 0x0000000a 0x00
+stcs r4 0x01
+ldcs r3
+ldcs r3
+```
+
+### Clean up
+
+```pdi
+sts.u16 0x00000028 0x00 0x00
+sts.u8 0x00000048 0x00
+```
+
+## Reading processor state
+
+### Read program counter (PC+1)
+
+```pdi
+lds.u32 0x00000004
+```
+
+### Clean up verification
+
+```pdi
+lds.u8 0x00000050
+lds.u8 0x0000000b
+```
+
+### Read back Stack Pointer + SREG
+
+```pdi
+st.u32 ptr 0x0100003d
+repeat 0x02
+ld *(ptr++)
+```
+
+### Verify state
+
+```pdi
+ldcs r3
+lds.u8 0x010001ca
+lds.u8 0x010001c4
+```
 
 ```{include} single-stepping.md
 ```
