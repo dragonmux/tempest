@@ -272,8 +272,8 @@ sts.u8 0x00000048 0x00
 </div>
 <p>This sequence performs the following operations (some of them need more figuring out how things work to understand):</p>
 <ul class="simple">
-<li><p>Stores 0x00000129 as the target program address to run the processor to into the first hardware breakpoint unit break address register at 0x00000020. Program addresses are in words which is why they are half what they should be going by <code class="docutils literal notranslate"><span class="pre">objdump</span></code> output.</p></li>
-<li><p>Stores 0x00000000 to the first hardware breakpoint unit at its second register at 0x00000024</p></li>
+<li><p>Stores 0x00000129 as the target program address to run the processor to into the hardware breakpoint unit’s first  break address register at 0x00000020. Program addresses are in words which is why they are half what they should be going by <code class="docutils literal notranslate"><span class="pre">objdump</span></code> output.</p></li>
+<li><p>Stores 0x00000000 to the hardware breakpoint unit’s second break address register at 0x00000024</p></li>
 <li><p>Stores 0x00 to a byte register at 0x00000040 (twice) - the purpose for this is not well understood yet but this may be the second hardware breakpoint unit</p></li>
 <li><p>Stores 0x0100 to the first hardware breakpoint unit at its third (16-bit) register at 0x00000028</p></li>
 <li><p>Stores 0x00 to a byte register at 0x00000048 - the purpose for this is not well understood yet but this may be the second hardware breakpoint unit</p></li>

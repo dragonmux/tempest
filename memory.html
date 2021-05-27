@@ -263,21 +263,21 @@
 <div class="section" id="breakpoint-unit">
 <h2>Breakpoint Unit<a class="headerlink" href="#breakpoint-unit" title="Permalink to this headline">¶</a></h2>
 <p>The breakpoint unit has the following memory layout:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+=================+
-| break address 1 | +0x00
-+-----------------+
-| break address 2 | +0x04
-+-----------------+
-|     flags ?     | +0x08
-+-----------------+
-|        ⋮        |
-+-----------------+
-|       ???       | +0x20
-+-----------------+
-|       ???       | +0x24
-+-----------------+
-|       ???       | +0x28
-+=================+
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+===================+
+|  break address 1  | +0x00
++-------------------+
+|  break address 2  | +0x04
++-------------------+
+| breakpoint  count | +0x08
++-------------------+
+|         ⋮         |
++-------------------+
+|        ???        | +0x20
++-------------------+
+|        ???        | +0x24
++-------------------+
+|        ???        | +0x28
++===================+
 </pre></div>
 </div>
 </div>
