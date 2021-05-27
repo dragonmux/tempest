@@ -115,7 +115,7 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Memory Map</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#breakpoint-units">Breakpoint Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#breakpoint-unit">Breakpoint Unit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-memory">Data Memory</a></li>
 </ul>
 </li>
@@ -227,10 +227,7 @@
 |  regs. FIFO  | +0xc
 +--------------+ &lt;- 0x00000020
 |  Breakpoint  |
-|    Unit 1    |
-+--------------+ &lt;- 0x00000040
-|  Breakpoint  |
-|    Unit 2    |
+|     Unit     |
 +--------------+ &lt;- 0x00000060
 |              |
 +--------------+ &lt;- 0x00000100
@@ -263,16 +260,24 @@
 +==============+ &lt;- 0x02000000
 </pre></div>
 </div>
-<div class="section" id="breakpoint-units">
-<h2>Breakpoint Units<a class="headerlink" href="#breakpoint-units" title="Permalink to this headline">¶</a></h2>
-<p>Breakpoint units have the following memory layout:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+===============+
-| break address | +0x0
-+---------------+
-|    flags ?    | +0x4
-+---------------+
-|    flags ?    | +0x8
-+===============+
+<div class="section" id="breakpoint-unit">
+<h2>Breakpoint Unit<a class="headerlink" href="#breakpoint-unit" title="Permalink to this headline">¶</a></h2>
+<p>The breakpoint unit has the following memory layout:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+=================+
+| break address 1 | +0x00
++-----------------+
+| break address 2 | +0x04
++-----------------+
+|     flags ?     | +0x08
++-----------------+
+|        ⋮        |
++-----------------+
+|       ???       | +0x20
++-----------------+
+|       ???       | +0x24
++-----------------+
+|       ???       | +0x28
++=================+
 </pre></div>
 </div>
 </div>

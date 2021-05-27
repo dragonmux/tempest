@@ -37,7 +37,7 @@ ldcs r3
 ```
 
 Writing bit 1 of r4 puts the processor into debug-based pause once reset is released
-the first LDCS to r3 is used to verify that r3 is presently 0.
+the first LDCS to r3 is used to verify that r3 is presently 0x10 (processor held in reset, debugging not active).
 Once reset is released, r3 will initially be 0x14, which should be observed with the second LDCS.
 Once debug setup is completed, r4 will then read as 0x04, which should be observed with the final LDCS.
 

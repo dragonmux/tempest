@@ -115,7 +115,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../memory.html">Memory Map</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../memory.html#breakpoint-units">Breakpoint Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../memory.html#breakpoint-unit">Breakpoint Unit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../memory.html#data-memory">Data Memory</a></li>
 </ul>
 </li>
@@ -252,7 +252,7 @@ ldcs r3
 </pre></div>
 </div>
 <p>Writing bit 1 of r4 puts the processor into debug-based pause once reset is released
-the first LDCS to r3 is used to verify that r3 is presently 0.
+the first LDCS to r3 is used to verify that r3 is presently 0x10 (processor held in reset, debugging not active).
 Once reset is released, r3 will initially be 0x14, which should be observed with the second LDCS.
 Once debug setup is completed, r4 will then read as 0x04, which should be observed with the final LDCS.</p>
 </div>
