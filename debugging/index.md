@@ -130,5 +130,27 @@ lds.u8 0x010001ca
 lds.u8 0x010001c4
 ```
 
+### Reading back the AVR registers
+
+```pdi
+sts.u32 0x00000004 0x00 0x00 0x00 0x00
+sts.u8 0x0000000a 0x11
+sts.u32 0x00000000 0x20 0x00 0x00 0x00
+stcs r4 1
+st ptr 0x0000000c
+repeat 31
+ld *ptr
+```
+
+This sequence does the following:
+
+* Sets the program counter to 0x0 (is this actually necessary?)
+* Loads the debug control register with special value 0x11 which turns the multifunction register into a read counter
+* Loads the now read counter with the number of registers to read
+* Tells the PDI part of the debug controller to exec the action (STCS to r4)
+* Loads the PDI pointer register with the address of the read FIFO
+* Tells the PDI controller to repeat for the number of AVR registers minus 1
+* Reads the registers back from the read FIFO (r0..r31)
+
 ```{include} single-stepping.md
 ```
