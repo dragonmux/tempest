@@ -140,6 +140,7 @@
 <li class="toctree-l3"><a class="reference internal" href="debugging/index.html#clean-up-verification">Clean up verification</a></li>
 <li class="toctree-l3"><a class="reference internal" href="debugging/index.html#read-back-stack-pointer-sreg">Read back Stack Pointer + SREG</a></li>
 <li class="toctree-l3"><a class="reference internal" href="debugging/index.html#verify-state">Verify state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="debugging/index.html#reading-back-the-avr-registers">Reading back the AVR registers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="debugging/index.html#single-stepping">Single Stepping</a></li>
@@ -221,7 +222,7 @@
 <h1>Memory Map<a class="headerlink" href="#memory-map" title="Permalink to this headline">¶</a></h1>
 <p>The ATXMega256A3U PDI controller has the following memory map:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+==============+ &lt;- 0x00000000
-|  read count  | +0x0
+|  multifunc.  | +0x0
 |   prog ctr   | +0x4
 |  debug ctrl  | +0xa
 |  regs. FIFO  | +0xc

@@ -140,6 +140,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#clean-up-verification">Clean up verification</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#read-back-stack-pointer-sreg">Read back Stack Pointer + SREG</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#verify-state">Verify state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reading-back-the-avr-registers">Reading back the AVR registers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#single-stepping">Single Stepping</a></li>
@@ -343,6 +344,28 @@ lds.u8 0x010001ca
 lds.u8 0x010001c4
 </pre></div>
 </div>
+</div>
+<div class="section" id="reading-back-the-avr-registers">
+<h3>Reading back the AVR registers<a class="headerlink" href="#reading-back-the-avr-registers" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>sts.u32 0x00000004 0x00 0x00 0x00 0x00
+sts.u8 0x0000000a 0x11
+sts.u32 0x00000000 0x20 0x00 0x00 0x00
+stcs r4 1
+st ptr 0x0000000c
+repeat 31
+ld *ptr
+</pre></div>
+</div>
+<p>This sequence does the following:</p>
+<ul class="simple">
+<li><p>Sets the program counter to 0x0 (is this actually necessary?)</p></li>
+<li><p>Loads the debug control register with special value 0x11 which turns the multifunction register into a read counter</p></li>
+<li><p>Loads the now read counter with the number of registers to read</p></li>
+<li><p>Tells the PDI part of the debug controller to exec the action (STCS to r4)</p></li>
+<li><p>Loads the PDI pointer register with the address of the read FIFO</p></li>
+<li><p>Tells the PDI controller to repeat for the number of AVR registers minus 1</p></li>
+<li><p>Reads the registers back from the read FIFO (r0..r31)</p></li>
+</ul>
 </div>
 </div>
 <div class="section" id="single-stepping">
