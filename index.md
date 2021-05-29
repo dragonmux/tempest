@@ -29,7 +29,7 @@ The goal is to allow for a full Open-Source implementation of program and debug 
 * [Memory Map](memory.md)
 * [Programming Interface](programming.md)
 * [Debug Interface](debugging/index.md)
-  * [Single-stepping](debugging/single-stepping.md)
+  * [Single-stepping](debugging/index.md#single-stepping)
 
 ## Licensing
 
