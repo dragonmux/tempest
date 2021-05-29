@@ -143,7 +143,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#reading-back-the-avr-registers">Reading back the AVR registers</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#single-stepping">Single Stepping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#single-stepping">Single Stepping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-the-breakpoint">Setting up the breakpoint</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">License</a><ul>
@@ -370,6 +373,21 @@ ld *ptr
 </div>
 <div class="section" id="single-stepping">
 <h2>Single Stepping<a class="headerlink" href="#single-stepping" title="Permalink to this headline">¶</a></h2>
+<p>The debug control system has a tempory (single-stepping) breakpoint available too which can be used to implement one-use breakpoints without touching the main two.</p>
+<div class="section" id="setting-up-the-breakpoint">
+<h3>Setting up the breakpoint<a class="headerlink" href="#setting-up-the-breakpoint" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>sts.u8 0x0000000a 0x04
+sts.u32 0x00000000 0x55 0x03 0x00 0x00
+sts.u32 0x00000004 0x54 0x03 0x00 0x00
+</pre></div>
+</div>
+<p>This sequence does the following:</p>
+<ul class="simple">
+<li><p>Loads the debug control register with special value 0x04 which turns the multifunction register into a temporary breakpoint</p></li>
+<li><p>Loads the now breakpoint register with the address to break on (0x0355 in this example)</p></li>
+<li><p>Loads the program counter with the resumption address (0x0354 in this address, making this a single-step run)</p></li>
+</ul>
+</div>
 </div>
 </div>
 

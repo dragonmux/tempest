@@ -152,5 +152,20 @@ This sequence does the following:
 * Tells the PDI controller to repeat for the number of AVR registers minus 1
 * Reads the registers back from the read FIFO (r0..r31)
 
-```{include} single-stepping.md
+## Single Stepping
+
+The debug control system has a tempory (single-stepping) breakpoint available too which can be used to implement one-use breakpoints without touching the main two.
+
+### Setting up the breakpoint
+
+```pdi
+sts.u8 0x0000000a 0x04
+sts.u32 0x00000000 0x55 0x03 0x00 0x00
+sts.u32 0x00000004 0x54 0x03 0x00 0x00
 ```
+
+This sequence does the following:
+
+* Loads the debug control register with special value 0x04 which turns the multifunction register into a temporary breakpoint
+* Loads the now breakpoint register with the address to break on (0x0355 in this example)
+* Loads the program counter with the resumption address (0x0354 in this address, making this a single-step run)
