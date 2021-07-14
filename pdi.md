@@ -310,3 +310,21 @@ This encapsulation defines 3 special character values of note to emulate certain
 "+ P1" in the above refers to the parity bit being set to generate a parity error.
 The bit transitions for communications to TDI must be performed on the TCK falling edge, and TDO sampled on the rising.
 
+#### The conversation, a worked example
+
+JTAG-PDI does two important things to handle being a full-duplex protocol, the first is that the **target's controller** will send Empty characters while waiting for more imput and and the **programmer** must use the NUL byte as a dummy character when expecting the target to send data back. It is important that the programmer not generate parity errors as this triggers a PDI transaction abort.
+
+In practice this looks a bit like:
+
+```{mermaid}
+sequenceDiagram
+	participant Programmer
+	participant Target
+	Programmer-->>Target: LDCS status, m1
+	Target-->>Programmer: EMPTY
+	Note right of Target: These happen simultaneously<br />with the reply on TDO<br />as you send the request on TDI
+	Programmer->>Target: DUMMY (0x00)
+	Target-->>Programmer: 0x00
+```
+
+In this example, we ask the target for its PDI status, and get the answer '0' (neither programming nor debug mode enabled).
