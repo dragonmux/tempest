@@ -235,3 +235,33 @@ This status regsiter indicates the current state of the debug engine when enable
 ## Native PDI protocol
 
 ## JTAG-PDI protocol
+
+This section assumes exiting basic working knowledge of the JTAG standard (IEEE 1149.1-2013). This will only cover how the protocol works with the TAP and sits above it.
+
+The JTAG-encapsulated form of PDI is rather interesting in construction as it consists of a few elements, some of which caused by taking a half-duplex, single-data-wire bi-directional protocol with turn-arounds and re-mapping it to a full-duplex comms protocol. The first of the elements is how ID'ing the device works, the second is entering PDI
+mode, and the third is the encapsulation of the PDI data.
+
+### The TAP instruction register
+
+On all Atmel devices implementing JTAG-PDI, the IR is 4 bits wide and defines the following instructions:
+
+| IR Code |     Meaning     |
+| :-----: |:----------------|
+|   0x0   | Unassigned      |
+|   0x1   | External Test   |
+|   0x2   | Sample/Pre-load |
+|   0x3   | IDCode          |
+|   0x4   | Clamp           |
+|   0x5   | High-Z          |
+|   0x6   | Unassigned      |
+|   0x7   | PDI Comms       |
+|   0x8   | Unassigned      |
+|   0xA   | Unassigned      |
+|   0xB   | Unassigned      |
+|   0xC   | Unassigned      |
+|   0xD   | Unassigned      |
+|   0xE   | Unassigned      |
+|   0xF   | Bypass          |
+
+Of this table, we only really care about 3 instructions - IDCode (0x3), PDI (0x7), and Bypass (0xF).
+The device when TAP reset, enters IDCode by default.
