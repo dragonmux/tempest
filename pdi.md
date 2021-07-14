@@ -284,3 +284,29 @@ The following are a list of known values and the chips they belong to:
 |  0x6974203F | ATXMega128A3U |
 |  0x6974403F | ATXMega192A3U |
 |  0x6984203F | ATXMega256A3U |
+
+### PDI Mode (IR = PDI)
+
+Once you have identified a device and confirmed it definitely implements PDI, issue the PDI Comms instruction to the TAP. This will (until touching IR again) enter PDI mode and drop the TAP into JTAG-PDI mode. From here on in, you can ignore the TAP completely save for clocking data in and out of the 9-bit register that is now connected between TDI and TDO.
+
+Of importance to note, the PDI register in the Atmel literature is talked about as if it's a single shift-register between TDI and TDO, however it it may be helpful to think of it as more like two seperate shift registers - one connected to TDI and one to TDO  - for the purpose of the exchanges had.
+
+#### PDI Frame Format
+
+PDI data entering and leaving the PDI TAP register has the following format:
+
+| LSB |   |   |   |   |   |   |   | MSB |
+|:---:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:---:|
+|  0  | 1 | 2 | 3 | 4 | 5 | 6 | 7 |  P  |
+
+This is sent LSB first.
+
+This encapsulation defines 3 special character values of note to emulate certain aspects of the native protocol and handle that this is full-duplex comms:
+
+* the Break character: 0xBB + P1
+* the Delay character: 0xDB + P1
+* the Empty character: 0xEB + P1
+
+"+ P1" in the above refers to the parity bit being set to generate a parity error.
+The bit transitions for communications to TDI must be performed on the TCK falling edge, and TDO sampled on the rising.
+
