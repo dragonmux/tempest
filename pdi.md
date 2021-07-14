@@ -265,3 +265,22 @@ On all Atmel devices implementing JTAG-PDI, the IR is 4 bits wide and defines th
 
 Of this table, we only really care about 3 instructions - IDCode (0x3), PDI (0x7), and Bypass (0xF).
 The device when TAP reset, enters IDCode by default.
+
+### Identification (IR = IDCode)
+
+The first thing to do when starting a conversation over JTAG is to perform an IDCode to find out what the part is. With the TAP IR loaded with IDCode, we then expect a value in the following format to be read:
+
+| 31 ... 28 | 27  ...  12 | 11    ...     1 | 0 |
+|:---------:|:-----------:|:---------------:|:-:|
+|  Version  | Part Number | Manufacturer ID | 1 |
+
+Bit 0 listed here is the constant 1.
+
+The following are a list of known values and the chips they belong to:
+
+|   ID Code   |  Part Number  |
+|:-----------:|:--------------|
+|  0x6964203F | ATXMega64A3U  |
+|  0x6974203F | ATXMega128A3U |
+|  0x6974403F | ATXMega192A3U |
+|  0x6984203F | ATXMega256A3U |
