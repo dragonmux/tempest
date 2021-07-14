@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
 
   
@@ -30,10 +32,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -110,7 +114,16 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pdi.html#native-pdi-protocol">Native PDI protocol</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pdi.html#jtag-pdi-protocol">JTAG-PDI protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pdi.html#jtag-pdi-protocol">JTAG-PDI protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pdi.html#the-tap-instruction-register">The TAP instruction register</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pdi.html#identification-ir-idcode">Identification (IR = IDCode)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pdi.html#pdi-mode-ir-pdi">PDI Mode (IR = PDI)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pdi.html#pdi-frame-format">PDI Frame Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pdi.html#the-conversation-a-worked-example">The conversation, a worked example</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="memory.html">Memory Map</a><ul>
@@ -222,7 +235,7 @@
             
   <div class="toctree-wrapper compound">
 </div>
-<div class="section" id="tempest-jtag-pdi-re-project">
+<div class="tex2jax_ignore mathjax_ignore section" id="tempest-jtag-pdi-re-project">
 <h1>Tempest JTAG-PDI RE project<a class="headerlink" href="#tempest-jtag-pdi-re-project" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-is-tempest">
 <h2>What is Tempest<a class="headerlink" href="#what-is-tempest" title="Permalink to this headline">¶</a></h2>
@@ -242,6 +255,8 @@ It documents both the program, and debug components with the intention of provid
 <li><p><a class="reference internal" href="programming.html"><span class="doc std std-doc">Programming Interface</span></a></p></li>
 <li><p><a class="reference internal" href="debugging/index.html"><span class="doc std std-doc">Debug Interface</span></a></p>
 <ul>
+<li><p><a class="reference external" href="debugging/index.md#getting-started">Getting started</a></p></li>
+<li><p><a class="reference external" href="debugging/index.md#reading-processor-state">Reading processor state</a></p></li>
 <li><p><a class="reference external" href="debugging/index.md#single-stepping">Single-stepping</a></p></li>
 </ul>
 </li>

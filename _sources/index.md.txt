@@ -29,6 +29,8 @@ The goal is to allow for a full Open-Source implementation of program and debug 
 * [Memory Map](memory.md)
 * [Programming Interface](programming.md)
 * [Debug Interface](debugging/index.md)
+  * [Getting started](debugging/index.md#getting-started)
+  * [Reading processor state](debugging/index.md#reading-processor-state)
   * [Single-stepping](debugging/index.md#single-stepping)
 
 ## Licensing

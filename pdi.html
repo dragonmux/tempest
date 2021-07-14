@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
 
   
@@ -30,10 +32,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -111,7 +115,16 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#native-pdi-protocol">Native PDI protocol</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#jtag-pdi-protocol">JTAG-PDI protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jtag-pdi-protocol">JTAG-PDI protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-tap-instruction-register">The TAP instruction register</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#identification-ir-idcode">Identification (IR = IDCode)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pdi-mode-ir-pdi">PDI Mode (IR = PDI)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pdi-frame-format">PDI Frame Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-conversation-a-worked-example">The conversation, a worked example</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="memory.html">Memory Map</a><ul>
@@ -221,7 +234,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="what-is-pdi">
+  <div class="tex2jax_ignore mathjax_ignore section" id="what-is-pdi">
 <h1>What is PDI<a class="headerlink" href="#what-is-pdi" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="the-component-in-the-mcu">
 <h2>The component in the MCU<a class="headerlink" href="#the-component-in-the-mcu" title="Permalink to this headline">¶</a></h2>
@@ -854,6 +867,171 @@ The register’s bits have the following meanings assigned to them:</p>
 </div>
 <div class="section" id="jtag-pdi-protocol">
 <h2>JTAG-PDI protocol<a class="headerlink" href="#jtag-pdi-protocol" title="Permalink to this headline">¶</a></h2>
+<p>This section assumes exiting basic working knowledge of the JTAG standard (IEEE 1149.1-2013). This will only cover how the protocol works with the TAP and sits above it.</p>
+<p>The JTAG-encapsulated form of PDI is rather interesting in construction as it consists of a few elements, some of which caused by taking a half-duplex, single-data-wire bi-directional protocol with turn-arounds and re-mapping it to a full-duplex comms protocol. The first of the elements is how ID’ing the device works, the second is entering PDI
+mode, and the third is the encapsulation of the PDI data.</p>
+<div class="section" id="the-tap-instruction-register">
+<h3>The TAP instruction register<a class="headerlink" href="#the-tap-instruction-register" title="Permalink to this headline">¶</a></h3>
+<p>On all Atmel devices implementing JTAG-PDI, the IR is 4 bits wide and defines the following instructions:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>IR Code</p></th>
+<th class="text-align:left head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>0x0</p></td>
+<td class="text-align:left"><p>Unassigned</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0x1</p></td>
+<td class="text-align:left"><p>External Test</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0x2</p></td>
+<td class="text-align:left"><p>Sample/Pre-load</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0x3</p></td>
+<td class="text-align:left"><p>IDCode</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0x4</p></td>
+<td class="text-align:left"><p>Clamp</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0x5</p></td>
+<td class="text-align:left"><p>High-Z</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0x6</p></td>
+<td class="text-align:left"><p>Unassigned</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0x7</p></td>
+<td class="text-align:left"><p>PDI Comms</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0x8</p></td>
+<td class="text-align:left"><p>Unassigned</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0xA</p></td>
+<td class="text-align:left"><p>Unassigned</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0xB</p></td>
+<td class="text-align:left"><p>Unassigned</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0xC</p></td>
+<td class="text-align:left"><p>Unassigned</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0xD</p></td>
+<td class="text-align:left"><p>Unassigned</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0xE</p></td>
+<td class="text-align:left"><p>Unassigned</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0xF</p></td>
+<td class="text-align:left"><p>Bypass</p></td>
+</tr>
+</tbody>
+</table>
+<p>Of this table, we only really care about 3 instructions - IDCode (0x3), PDI (0x7), and Bypass (0xF).
+The device when TAP reset, enters IDCode by default.</p>
+</div>
+<div class="section" id="identification-ir-idcode">
+<h3>Identification (IR = IDCode)<a class="headerlink" href="#identification-ir-idcode" title="Permalink to this headline">¶</a></h3>
+<p>The first thing to do when starting a conversation over JTAG is to perform an IDCode to find out what the part is. With the TAP IR loaded with IDCode, we then expect a value in the following format to be read:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>31 … 28</p></th>
+<th class="text-align:center head"><p>27  …  12</p></th>
+<th class="text-align:center head"><p>11    …     1</p></th>
+<th class="text-align:center head"><p>0</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>Version</p></td>
+<td class="text-align:center"><p>Part Number</p></td>
+<td class="text-align:center"><p>Manufacturer ID</p></td>
+<td class="text-align:center"><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<p>Bit 0 listed here is the constant 1.</p>
+<p>The following are a list of known values and the chips they belong to:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>ID Code</p></th>
+<th class="text-align:left head"><p>Part Number</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>0x6964203F</p></td>
+<td class="text-align:left"><p>ATXMega64A3U</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0x6974203F</p></td>
+<td class="text-align:left"><p>ATXMega128A3U</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:center"><p>0x6974403F</p></td>
+<td class="text-align:left"><p>ATXMega192A3U</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:center"><p>0x6984203F</p></td>
+<td class="text-align:left"><p>ATXMega256A3U</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="pdi-mode-ir-pdi">
+<h3>PDI Mode (IR = PDI)<a class="headerlink" href="#pdi-mode-ir-pdi" title="Permalink to this headline">¶</a></h3>
+<p>Once you have identified a device and confirmed it definitely implements PDI, issue the PDI Comms instruction to the TAP. This will (until touching IR again) enter PDI mode and drop the TAP into JTAG-PDI mode. From here on in, you can ignore the TAP completely save for clocking data in and out of the 9-bit register that is now connected between TDI and TDO.</p>
+<p>Of importance to note, the PDI register in the Atmel literature is talked about as if it’s a single shift-register between TDI and TDO, however it it may be helpful to think of it as more like two seperate shift registers - one connected to TDI and one to TDO  - for the purpose of the exchanges had.</p>
+<div class="section" id="pdi-frame-format">
+<h4>PDI Frame Format<a class="headerlink" href="#pdi-frame-format" title="Permalink to this headline">¶</a></h4>
+<p>PDI data entering and leaving the PDI TAP register has the following format:</p>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p>LSB</p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p></p></th>
+<th class="text-align:center head"><p>MSB</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p>0</p></td>
+<td class="text-align:center"><p>1</p></td>
+<td class="text-align:center"><p>2</p></td>
+<td class="text-align:center"><p>3</p></td>
+<td class="text-align:center"><p>4</p></td>
+<td class="text-align:center"><p>5</p></td>
+<td class="text-align:center"><p>6</p></td>
+<td class="text-align:center"><p>7</p></td>
+<td class="text-align:center"><p>P</p></td>
+</tr>
+</tbody>
+</table>
+<p>This is sent LSB first.</p>
+<p>This encapsulation defines 3 special character values of note to emulate certain aspects of the native protocol and handle that this is full-duplex comms:</p>
+<ul class="simple">
+<li><p>the Break character: 0xBB + P1</p></li>
+<li><p>the Delay character: 0xDB + P1</p></li>
+<li><p>the Empty character: 0xEB + P1</p></li>
+</ul>
+<p>“+ P1” in the above refers to the parity bit being set to generate a parity error.
+The bit transitions for communications to TDI must be performed on the TCK falling edge, and TDO sampled on the rising.</p>
+</div>
+<div class="section" id="the-conversation-a-worked-example">
+<h4>The conversation, a worked example<a class="headerlink" href="#the-conversation-a-worked-example" title="Permalink to this headline">¶</a></h4>
+<p>JTAG-PDI does two important things to handle being a full-duplex protocol, the first is that the <strong>target’s controller</strong> will send Empty characters while waiting for more imput and and the <strong>programmer</strong> must use the NUL byte as a dummy character when expecting the target to send data back. It is important that the programmer not generate parity errors as this triggers a PDI transaction abort.</p>
+<p>In practice this looks a bit like:</p>
+<div class="mermaid">
+            sequenceDiagram
+	participant Programmer
+	participant Target
+	Programmer--&gt;&gt;Target: LDCS status, m1
+	Target--&gt;&gt;Programmer: EMPTY
+	Note right of Target: These happen simultaneously&lt;br /&gt;with the reply on TDO&lt;br /&gt;as you send the request on TDI
+	Programmer-&gt;&gt;Target: DUMMY (0x00)
+	Target--&gt;&gt;Programmer: 0x00
+        </div><p>In this example, we ask the target for its PDI status, and get the answer ‘0’ (neither programming nor debug mode enabled).</p>
+</div>
+</div>
 </div>
 </div>
 

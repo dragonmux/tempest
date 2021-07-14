@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
 
   
@@ -30,10 +32,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -111,7 +115,16 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pdi.html#native-pdi-protocol">Native PDI protocol</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pdi.html#jtag-pdi-protocol">JTAG-PDI protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pdi.html#jtag-pdi-protocol">JTAG-PDI protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pdi.html#the-tap-instruction-register">The TAP instruction register</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pdi.html#identification-ir-idcode">Identification (IR = IDCode)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pdi.html#pdi-mode-ir-pdi">PDI Mode (IR = PDI)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pdi.html#pdi-frame-format">PDI Frame Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pdi.html#the-conversation-a-worked-example">The conversation, a worked example</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="memory.html">Memory Map</a><ul>
@@ -221,7 +234,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="license">
+  <div class="tex2jax_ignore mathjax_ignore section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
 <p>This project is licensed under the Creative Commons <a class="reference external" href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>. The full text of which is included below</p>
 <div class="section" id="cc-by-sa-2-0">
