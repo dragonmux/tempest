@@ -112,12 +112,16 @@ Cleans up after the debug run by clearing all set breakpoints by setting the con
 lds.u32 0x00000004
 ```
 
+Reads the program counter from its fixed register address of 0x00000004
+
 ### Clean up verification
 
 ```pdi
 lds.u8 0x00000050
 lds.u8 0x0000000b
 ```
+
+Reads an unknown special register in the breakpoint unit and the upper half of the control register
 
 ### Read back Stack Pointer + SREG
 
@@ -127,6 +131,8 @@ repeat 0x02
 ld *(ptr++)
 ```
 
+Directly reads from the PDI bus location for the SPL, SPH and SREG registers in peripheral space
+
 ### Verify state
 
 ```pdi
@@ -134,6 +140,8 @@ ldcs r3
 lds.u8 0x010001ca
 lds.u8 0x010001c4
 ```
+
+Verify that the NVM controller in peripheral space is in an idle state
 
 ### Reading back the AVR registers
 
