@@ -43,7 +43,8 @@ Once debug setup is completed, r4 will then read as 0x04, which should be observ
 
 ## Running the processor to an address
 
-The following uses hardware breakpoint unit 1, however based on documentation murmers it stands there should be 2.
+The following uses the hardware breakpoint unit, which contains 2 breakpoint address registers and associated
+control machinary.
 
 ### Set up run-to-address
 
@@ -58,11 +59,15 @@ sts.u8 0x00000048 0x00
 
 This sequence performs the following operations (some of them need more figuring out how things work to understand):
 
-* Stores 0x00000129 as the target program address to run the processor to into the hardware breakpoint unit's first  break address register at 0x00000020. Program addresses are in words which is why they are half what they should be going by `objdump` output.
+* Stores 0x00000129 as the target program address to run the processor to into the hardware breakpoint unit's
+  first  break address register at 0x00000020. Program addresses are in words which is why they are half what
+  they should be going by `objdump` output.
 * Stores 0x00000000 to the hardware breakpoint unit's second break address register at 0x00000024
-* Stores 0x00 to a byte register at 0x00000040 (twice) - the purpose for this is not well understood yet but this may be the second hardware breakpoint unit
-* Stores 0x0100 to the first hardware breakpoint unit at its third (16-bit) register at 0x00000028
-* Stores 0x00 to a byte register at 0x00000048 - the purpose for this is not well understood yet but this may be the second hardware breakpoint unit
+* Stores 0x00 to a byte register at 0x00000040 (twice) - the purpose for this is not well understood yet and is
+  essential to the proper functioning of the breakpoint unit. Without this, the unit will not engage correctly.
+* Stores 0x0100 to the hardware breakpoint unit's breakpoint counter and configuration (16-bit) register at 0x00000028
+* Stores 0x00 to a byte register at 0x00000048 - the purpose for this is not well understood yet and is
+  essential to the proper functioning of the breakpoint unit. Without this, the unit will not engage correctly.
 
 ### Set the program counter to a specific address
 
