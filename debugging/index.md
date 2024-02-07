@@ -159,10 +159,11 @@ This sequence does the following:
 
 * Sets the program counter to 0x0 (is this actually necessary?)
 * Loads the debug control register with special value 0x11 which turns the multifunction register into a read counter
-* Loads the now read counter with the number of registers to read
+* Loads the multifunction register (now a read counter) with the number of registers to read (32)
 * Tells the PDI part of the debug controller to exec the action (STCS to r4)
-* Loads the PDI pointer register with the address of the read FIFO
-* Tells the PDI controller to repeat for the number of AVR registers minus 1
+* Loads the PDI pointer register with the address of the I/O FIFO (0x0000000c)
+* Tells the PDI controller to repeat for the number of AVR registers minus 1 (due to how the repeat register works,
+  this makes the load run 32 times)
 * Reads the registers back from the read FIFO (r0..r31)
 
 ## Single Stepping
