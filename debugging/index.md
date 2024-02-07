@@ -75,7 +75,7 @@ This sequence performs the following operations (some of them need more figuring
 sts.u32 0x00000004 0x00 0x00 0x00 0x00
 ```
 
-This writes the program counter, exposed at +0x4, to its POR value
+This writes the program counter, exposed at 0x00000004, to its POR value
 
 ### Run the program to breakpoint
 
@@ -90,8 +90,8 @@ ldcs r3
 This sequence does the following:
 
 * With r4 poked, releases reset so that at this stage enters the processor into a debugger-supervised state
-* Stores 0x00 to the debug register 0x0000000a which appears to put the processor in run
-* Ensures r4 holds the value 0x01 which ensures the debugger engage bit is set
+* Stores 0x00 to the debug register 0x0000000a which appears to arm putting the processor in run
+* Ensures r4 holds the value 0x01 which ensures we stay in debugger-supervised state is set
 * Loads the status of the processor from r3 (should read as 0x14 the first time)
 * Loads the status of the processor again (should read as 0x04 the second time indicating the breakpoint is hit)
 
@@ -102,7 +102,7 @@ sts.u16 0x00000028 0x00 0x00
 sts.u8 0x00000048 0x00
 ```
 
-Cleans up after the debug run by clearing all set breakpoint flags(? could also be sizes)
+Cleans up after the debug run by clearing all set breakpoints by setting the control and counte value to 0
 
 ## Reading processor state
 
