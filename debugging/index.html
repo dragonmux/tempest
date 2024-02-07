@@ -1,95 +1,50 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Debugging using PDI &mdash; Tempest  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
-        <script>mermaid.initialize({startOnLoad:true});</script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="License" href="../license.html" />
     <link rel="prev" title="Programming" href="../programming.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../index.html" class="icon icon-home"> Tempest
           
-
-          
+          <a href="../index.html" class="icon icon-home">
+            Tempest
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../pdi.html">What is PDI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../pdi.html#the-component-in-the-mcu">The component in the MCU</a></li>
@@ -128,6 +83,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../memory.html">Memory Map</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../memory.html#processor-controller">Processor Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../memory.html#breakpoint-unit">Breakpoint Unit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../memory.html#data-memory">Data Memory</a></li>
 </ul>
@@ -169,98 +125,57 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributors.html">Contributors</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Tempest</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>Debugging using PDI</li>
-    
-    
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Debugging using PDI</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/debugging/index.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="tex2jax_ignore mathjax_ignore section" id="debugging-using-pdi">
-<h1>Debugging using PDI<a class="headerlink" href="#debugging-using-pdi" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="getting-started">
-<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+             
+  <section id="debugging-using-pdi">
+<h1>Debugging using PDI<a class="headerlink" href="#debugging-using-pdi" title="Link to this heading"></a></h1>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
 <p>Debug has its own key value that must be sent to enable it. You can check if this needs doing by issuing <code class="docutils literal notranslate"><span class="pre">ldcs</span> <span class="pre">status</span></code> to the PDI processor.</p>
 <p>The debug key uses the constant 0x3a212dd49f7c8121 to unlock the debug part of the controller.</p>
-</div>
-<div class="section" id="initiating-a-debug-session">
-<h2>Initiating a debug session<a class="headerlink" href="#initiating-a-debug-session" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="put-the-processor-into-reset">
-<h3>Put the processor into reset<a class="headerlink" href="#put-the-processor-into-reset" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="initiating-a-debug-session">
+<h2>Initiating a debug session<a class="headerlink" href="#initiating-a-debug-session" title="Link to this heading"></a></h2>
+<section id="put-the-processor-into-reset">
+<h3>Put the processor into reset<a class="headerlink" href="#put-the-processor-into-reset" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>stcs reset 0x59
 ldcs status
 </pre></div>
 </div>
 <p>The LDCS should return 0x00 if these are the first instructions run in a session.</p>
-</div>
-<div class="section" id="turn-the-debug-interface-on">
-<h3>Turn the debug interface on<a class="headerlink" href="#turn-the-debug-interface-on" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="turn-the-debug-interface-on">
+<h3>Turn the debug interface on<a class="headerlink" href="#turn-the-debug-interface-on" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>key debug
 ldcs status
 </pre></div>
 </div>
 <p>The LDCS should return 0x04 if <code class="docutils literal notranslate"><span class="pre">key</span> <span class="pre">nvm</span></code> has not been run yet, and 0x06 if it has.</p>
-</div>
-<div class="section" id="take-the-reset-processor-and-put-it-in-debug-pause-state">
-<h3>Take the reset processor and put it in debug pause state<a class="headerlink" href="#take-the-reset-processor-and-put-it-in-debug-pause-state" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="take-the-reset-processor-and-put-it-in-debug-pause-state">
+<h3>Take the reset processor and put it in debug pause state<a class="headerlink" href="#take-the-reset-processor-and-put-it-in-debug-pause-state" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>stcs r4 1
 ldcs r3
 stcs reset 0x00
@@ -272,13 +187,14 @@ ldcs r3
 the first LDCS to r3 is used to verify that r3 is presently 0x10 (processor held in reset, debugging not active).
 Once reset is released, r3 will initially be 0x14, which should be observed with the second LDCS.
 Once debug setup is completed, r4 will then read as 0x04, which should be observed with the final LDCS.</p>
-</div>
-</div>
-<div class="section" id="running-the-processor-to-an-address">
-<h2>Running the processor to an address<a class="headerlink" href="#running-the-processor-to-an-address" title="Permalink to this headline">¶</a></h2>
-<p>The following uses hardware breakpoint unit 1, however based on documentation murmers it stands there should be 2.</p>
-<div class="section" id="set-up-run-to-address">
-<h3>Set up run-to-address<a class="headerlink" href="#set-up-run-to-address" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="running-the-processor-to-an-address">
+<h2>Running the processor to an address<a class="headerlink" href="#running-the-processor-to-an-address" title="Link to this heading"></a></h2>
+<p>The following uses the hardware breakpoint unit, which contains 2 breakpoint address registers and associated
+control machinery.</p>
+<section id="set-up-run-to-address">
+<h3>Set up run-to-address<a class="headerlink" href="#set-up-run-to-address" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>sts.u32 0x00000020 0x29 0x01 0x00 0x00
 sts.u32 0x00000024 0x00 0x00 0x00 0x00
 sts.u8 0x00000040 0x00
@@ -289,22 +205,26 @@ sts.u8 0x00000048 0x00
 </div>
 <p>This sequence performs the following operations (some of them need more figuring out how things work to understand):</p>
 <ul class="simple">
-<li><p>Stores 0x00000129 as the target program address to run the processor to into the hardware breakpoint unit’s first  break address register at 0x00000020. Program addresses are in words which is why they are half what they should be going by <code class="docutils literal notranslate"><span class="pre">objdump</span></code> output.</p></li>
+<li><p>Stores 0x00000129 (as the target program address to run the processor to) into the hardware breakpoint unit’s
+first break address register at 0x00000020. Program addresses are in words which is why they are half what
+they should be going by <code class="docutils literal notranslate"><span class="pre">objdump</span></code> output.</p></li>
 <li><p>Stores 0x00000000 to the hardware breakpoint unit’s second break address register at 0x00000024</p></li>
-<li><p>Stores 0x00 to a byte register at 0x00000040 (twice) - the purpose for this is not well understood yet but this may be the second hardware breakpoint unit</p></li>
-<li><p>Stores 0x0100 to the first hardware breakpoint unit at its third (16-bit) register at 0x00000028</p></li>
-<li><p>Stores 0x00 to a byte register at 0x00000048 - the purpose for this is not well understood yet but this may be the second hardware breakpoint unit</p></li>
+<li><p>Stores 0x00 to a byte register at 0x00000040 (twice) - the purpose for this is not well understood yet and is
+essential to the proper functioning of the breakpoint unit. Without this, the unit will not engage correctly.</p></li>
+<li><p>Stores 0x0100 to the hardware breakpoint unit’s breakpoint counter and configuration (16-bit) register at 0x00000028</p></li>
+<li><p>Stores 0x00 to a byte register at 0x00000048 - the purpose for this is not well understood yet and is
+essential to the proper functioning of the breakpoint unit. Without this, the unit will not engage correctly.</p></li>
 </ul>
-</div>
-<div class="section" id="set-the-program-counter-to-a-specific-address">
-<h3>Set the program counter to a specific address<a class="headerlink" href="#set-the-program-counter-to-a-specific-address" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="set-the-program-counter-to-a-specific-address">
+<h3>Set the program counter to a specific address<a class="headerlink" href="#set-the-program-counter-to-a-specific-address" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>sts.u32 0x00000004 0x00 0x00 0x00 0x00
 </pre></div>
 </div>
-<p>This writes the program counter, exposed at +0x4, to its POR value</p>
-</div>
-<div class="section" id="run-the-program-to-breakpoint">
-<h3>Run the program to breakpoint<a class="headerlink" href="#run-the-program-to-breakpoint" title="Permalink to this headline">¶</a></h3>
+<p>This writes the program counter, exposed at 0x00000004, to its POR value</p>
+</section>
+<section id="run-the-program-to-breakpoint">
+<h3>Run the program to breakpoint<a class="headerlink" href="#run-the-program-to-breakpoint" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>stcs reset 0x00
 sts.u8 0x0000000a 0x00
 stcs r4 0x01
@@ -315,54 +235,58 @@ ldcs r3
 <p>This sequence does the following:</p>
 <ul class="simple">
 <li><p>With r4 poked, releases reset so that at this stage enters the processor into a debugger-supervised state</p></li>
-<li><p>Stores 0x00 to the debug register 0x0000000a which appears to put the processor in run</p></li>
-<li><p>Ensures r4 holds the value 0x01 which ensures the debugger engage bit is set</p></li>
+<li><p>Stores 0x00 to the debug register 0x0000000a which appears to arm the processor resuming execution</p></li>
+<li><p>Ensures r4 holds the value 0x01 which ensures we stay in debugger-supervised state is set</p></li>
 <li><p>Loads the status of the processor from r3 (should read as 0x14 the first time)</p></li>
 <li><p>Loads the status of the processor again (should read as 0x04 the second time indicating the breakpoint is hit)</p></li>
 </ul>
-</div>
-<div class="section" id="clean-up">
-<h3>Clean up<a class="headerlink" href="#clean-up" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="clean-up">
+<h3>Clean up<a class="headerlink" href="#clean-up" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>sts.u16 0x00000028 0x00 0x00
 sts.u8 0x00000048 0x00
 </pre></div>
 </div>
-<p>Cleans up after the debug run by clearing all set breakpoint flags(? could also be sizes)</p>
-</div>
-</div>
-<div class="section" id="reading-processor-state">
-<h2>Reading processor state<a class="headerlink" href="#reading-processor-state" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="read-program-counter-pc-1">
-<h3>Read program counter (PC+1)<a class="headerlink" href="#read-program-counter-pc-1" title="Permalink to this headline">¶</a></h3>
+<p>Cleans up after the debug run by clearing all set breakpoints by setting the control and counter value to 0</p>
+</section>
+</section>
+<section id="reading-processor-state">
+<h2>Reading processor state<a class="headerlink" href="#reading-processor-state" title="Link to this heading"></a></h2>
+<section id="read-program-counter-pc-1">
+<h3>Read program counter (PC+1)<a class="headerlink" href="#read-program-counter-pc-1" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>lds.u32 0x00000004
 </pre></div>
 </div>
-</div>
-<div class="section" id="clean-up-verification">
-<h3>Clean up verification<a class="headerlink" href="#clean-up-verification" title="Permalink to this headline">¶</a></h3>
+<p>Reads the program counter from its fixed register address of 0x00000004</p>
+</section>
+<section id="clean-up-verification">
+<h3>Clean up verification<a class="headerlink" href="#clean-up-verification" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>lds.u8 0x00000050
 lds.u8 0x0000000b
 </pre></div>
 </div>
-</div>
-<div class="section" id="read-back-stack-pointer-sreg">
-<h3>Read back Stack Pointer + SREG<a class="headerlink" href="#read-back-stack-pointer-sreg" title="Permalink to this headline">¶</a></h3>
+<p>Reads an unknown special register in the breakpoint unit and the upper half of the control register</p>
+</section>
+<section id="read-back-stack-pointer-sreg">
+<h3>Read back Stack Pointer + SREG<a class="headerlink" href="#read-back-stack-pointer-sreg" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>st.u32 ptr 0x0100003d
 repeat 0x02
 ld *(ptr++)
 </pre></div>
 </div>
-</div>
-<div class="section" id="verify-state">
-<h3>Verify state<a class="headerlink" href="#verify-state" title="Permalink to this headline">¶</a></h3>
+<p>Directly reads from the PDI bus location for the SPL, SPH and SREG registers in peripheral space</p>
+</section>
+<section id="verify-state">
+<h3>Verify state<a class="headerlink" href="#verify-state" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>ldcs r3
 lds.u8 0x010001ca
 lds.u8 0x010001c4
 </pre></div>
 </div>
-</div>
-<div class="section" id="reading-back-the-avr-registers">
-<h3>Reading back the AVR registers<a class="headerlink" href="#reading-back-the-avr-registers" title="Permalink to this headline">¶</a></h3>
+<p>Verify that the NVM controller in peripheral space is in an idle state</p>
+</section>
+<section id="reading-back-the-avr-registers">
+<h3>Reading back the AVR registers<a class="headerlink" href="#reading-back-the-avr-registers" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>sts.u32 0x00000004 0x00 0x00 0x00 0x00
 sts.u8 0x0000000a 0x11
 sts.u32 0x00000000 0x20 0x00 0x00 0x00
@@ -376,19 +300,20 @@ ld *ptr
 <ul class="simple">
 <li><p>Sets the program counter to 0x0 (is this actually necessary?)</p></li>
 <li><p>Loads the debug control register with special value 0x11 which turns the multifunction register into a read counter</p></li>
-<li><p>Loads the now read counter with the number of registers to read</p></li>
+<li><p>Loads the multifunction register (now a read counter) with the number of registers to read (32)</p></li>
 <li><p>Tells the PDI part of the debug controller to exec the action (STCS to r4)</p></li>
-<li><p>Loads the PDI pointer register with the address of the read FIFO</p></li>
-<li><p>Tells the PDI controller to repeat for the number of AVR registers minus 1</p></li>
+<li><p>Loads the PDI pointer register with the address of the I/O FIFO (0x0000000c)</p></li>
+<li><p>Tells the PDI controller to repeat for the number of AVR registers minus 1 (due to how the repeat register works,
+this makes the load run 32 times)</p></li>
 <li><p>Reads the registers back from the read FIFO (r0..r31)</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="single-stepping">
-<h2>Single Stepping<a class="headerlink" href="#single-stepping" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="single-stepping">
+<h2>Single Stepping<a class="headerlink" href="#single-stepping" title="Link to this heading"></a></h2>
 <p>The debug control system has a tempory (single-stepping) breakpoint available too which can be used to implement one-use breakpoints without touching the main two.</p>
-<div class="section" id="setting-up-the-breakpoint">
-<h3>Setting up the breakpoint<a class="headerlink" href="#setting-up-the-breakpoint" title="Permalink to this headline">¶</a></h3>
+<section id="setting-up-the-breakpoint">
+<h3>Setting up the breakpoint<a class="headerlink" href="#setting-up-the-breakpoint" title="Link to this heading"></a></h3>
 <div class="highlight-pdi notranslate"><div class="highlight"><pre><span></span>sts.u8 0x0000000a 0x04
 sts.u32 0x00000000 0x55 0x03 0x00 0x00
 sts.u32 0x00000004 0x54 0x03 0x00 0x00
@@ -400,56 +325,39 @@ sts.u32 0x00000004 0x54 0x03 0x00 0x00
 <li><p>Loads the now breakpoint register with the address to break on (0x0355 in this example)</p></li>
 <li><p>Loads the program counter with the resumption address (0x0354 in this address, making this a single-step run)</p></li>
 </ul>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../license.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../programming.html" class="btn btn-neutral float-left" title="Programming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../license.html" class="btn btn-neutral float-right" title="License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Tempest Contributors.
-
-    </p>
+    <p>&#169; Copyright 2021, Tempest Contributors.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

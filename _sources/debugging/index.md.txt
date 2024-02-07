@@ -43,7 +43,8 @@ Once debug setup is completed, r4 will then read as 0x04, which should be observ
 
 ## Running the processor to an address
 
-The following uses hardware breakpoint unit 1, however based on documentation murmers it stands there should be 2.
+The following uses the hardware breakpoint unit, which contains 2 breakpoint address registers and associated
+control machinery.
 
 ### Set up run-to-address
 
@@ -58,11 +59,15 @@ sts.u8 0x00000048 0x00
 
 This sequence performs the following operations (some of them need more figuring out how things work to understand):
 
-* Stores 0x00000129 as the target program address to run the processor to into the hardware breakpoint unit's first  break address register at 0x00000020. Program addresses are in words which is why they are half what they should be going by `objdump` output.
+* Stores 0x00000129 (as the target program address to run the processor to) into the hardware breakpoint unit's
+  first break address register at 0x00000020. Program addresses are in words which is why they are half what
+  they should be going by `objdump` output.
 * Stores 0x00000000 to the hardware breakpoint unit's second break address register at 0x00000024
-* Stores 0x00 to a byte register at 0x00000040 (twice) - the purpose for this is not well understood yet but this may be the second hardware breakpoint unit
-* Stores 0x0100 to the first hardware breakpoint unit at its third (16-bit) register at 0x00000028
-* Stores 0x00 to a byte register at 0x00000048 - the purpose for this is not well understood yet but this may be the second hardware breakpoint unit
+* Stores 0x00 to a byte register at 0x00000040 (twice) - the purpose for this is not well understood yet and is
+  essential to the proper functioning of the breakpoint unit. Without this, the unit will not engage correctly.
+* Stores 0x0100 to the hardware breakpoint unit's breakpoint counter and configuration (16-bit) register at 0x00000028
+* Stores 0x00 to a byte register at 0x00000048 - the purpose for this is not well understood yet and is
+  essential to the proper functioning of the breakpoint unit. Without this, the unit will not engage correctly.
 
 ### Set the program counter to a specific address
 
@@ -70,7 +75,7 @@ This sequence performs the following operations (some of them need more figuring
 sts.u32 0x00000004 0x00 0x00 0x00 0x00
 ```
 
-This writes the program counter, exposed at +0x4, to its POR value
+This writes the program counter, exposed at 0x00000004, to its POR value
 
 ### Run the program to breakpoint
 
@@ -85,8 +90,8 @@ ldcs r3
 This sequence does the following:
 
 * With r4 poked, releases reset so that at this stage enters the processor into a debugger-supervised state
-* Stores 0x00 to the debug register 0x0000000a which appears to put the processor in run
-* Ensures r4 holds the value 0x01 which ensures the debugger engage bit is set
+* Stores 0x00 to the debug register 0x0000000a which appears to arm the processor resuming execution
+* Ensures r4 holds the value 0x01 which ensures we stay in debugger-supervised state is set
 * Loads the status of the processor from r3 (should read as 0x14 the first time)
 * Loads the status of the processor again (should read as 0x04 the second time indicating the breakpoint is hit)
 
@@ -97,7 +102,7 @@ sts.u16 0x00000028 0x00 0x00
 sts.u8 0x00000048 0x00
 ```
 
-Cleans up after the debug run by clearing all set breakpoint flags(? could also be sizes)
+Cleans up after the debug run by clearing all set breakpoints by setting the control and counter value to 0
 
 ## Reading processor state
 
@@ -107,12 +112,16 @@ Cleans up after the debug run by clearing all set breakpoint flags(? could also 
 lds.u32 0x00000004
 ```
 
+Reads the program counter from its fixed register address of 0x00000004
+
 ### Clean up verification
 
 ```pdi
 lds.u8 0x00000050
 lds.u8 0x0000000b
 ```
+
+Reads an unknown special register in the breakpoint unit and the upper half of the control register
 
 ### Read back Stack Pointer + SREG
 
@@ -122,6 +131,8 @@ repeat 0x02
 ld *(ptr++)
 ```
 
+Directly reads from the PDI bus location for the SPL, SPH and SREG registers in peripheral space
+
 ### Verify state
 
 ```pdi
@@ -129,6 +140,8 @@ ldcs r3
 lds.u8 0x010001ca
 lds.u8 0x010001c4
 ```
+
+Verify that the NVM controller in peripheral space is in an idle state
 
 ### Reading back the AVR registers
 
@@ -146,10 +159,11 @@ This sequence does the following:
 
 * Sets the program counter to 0x0 (is this actually necessary?)
 * Loads the debug control register with special value 0x11 which turns the multifunction register into a read counter
-* Loads the now read counter with the number of registers to read
+* Loads the multifunction register (now a read counter) with the number of registers to read (32)
 * Tells the PDI part of the debug controller to exec the action (STCS to r4)
-* Loads the PDI pointer register with the address of the read FIFO
-* Tells the PDI controller to repeat for the number of AVR registers minus 1
+* Loads the PDI pointer register with the address of the I/O FIFO (0x0000000c)
+* Tells the PDI controller to repeat for the number of AVR registers minus 1 (due to how the repeat register works,
+  this makes the load run 32 times)
 * Reads the registers back from the read FIFO (r0..r31)
 
 ## Single Stepping
