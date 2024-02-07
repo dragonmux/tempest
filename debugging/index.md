@@ -44,7 +44,7 @@ Once debug setup is completed, r4 will then read as 0x04, which should be observ
 ## Running the processor to an address
 
 The following uses the hardware breakpoint unit, which contains 2 breakpoint address registers and associated
-control machinary.
+control machinery.
 
 ### Set up run-to-address
 
@@ -59,8 +59,8 @@ sts.u8 0x00000048 0x00
 
 This sequence performs the following operations (some of them need more figuring out how things work to understand):
 
-* Stores 0x00000129 as the target program address to run the processor to into the hardware breakpoint unit's
-  first  break address register at 0x00000020. Program addresses are in words which is why they are half what
+* Stores 0x00000129 (as the target program address to run the processor to) into the hardware breakpoint unit's
+  first break address register at 0x00000020. Program addresses are in words which is why they are half what
   they should be going by `objdump` output.
 * Stores 0x00000000 to the hardware breakpoint unit's second break address register at 0x00000024
 * Stores 0x00 to a byte register at 0x00000040 (twice) - the purpose for this is not well understood yet and is
@@ -90,7 +90,7 @@ ldcs r3
 This sequence does the following:
 
 * With r4 poked, releases reset so that at this stage enters the processor into a debugger-supervised state
-* Stores 0x00 to the debug register 0x0000000a which appears to arm putting the processor in run
+* Stores 0x00 to the debug register 0x0000000a which appears to arm the processor resuming execution
 * Ensures r4 holds the value 0x01 which ensures we stay in debugger-supervised state is set
 * Loads the status of the processor from r3 (should read as 0x14 the first time)
 * Loads the status of the processor again (should read as 0x04 the second time indicating the breakpoint is hit)
@@ -102,7 +102,7 @@ sts.u16 0x00000028 0x00 0x00
 sts.u8 0x00000048 0x00
 ```
 
-Cleans up after the debug run by clearing all set breakpoints by setting the control and counte value to 0
+Cleans up after the debug run by clearing all set breakpoints by setting the control and counter value to 0
 
 ## Reading processor state
 
