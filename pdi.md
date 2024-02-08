@@ -16,11 +16,19 @@ byte order.
 The LDS instruction loads up to 4 bytes of data from a given direct address and sends it back to the host.
 The opcode has the form:
 
-| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
-|---|---|---|---|---|---|---|---|
-| 0 | 0 | 0 | 0 | A | A | B | B |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": "B", "bits": 2, "type": 2, "attr": "sizeB"},
+		{"name": "A", "bits": 2, "type": 3, "attr": "sizeA"},
+		{"name": 0x0, "bits": 4, "type": 4, "attr": "opcode"},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+```
 
-AA and BB follow the [size rules](#size-rules) below
+A and B follow the [size rules](#size-rules) below.
 
 ### LD
 
@@ -28,23 +36,39 @@ The LD instruction loads up to 4 bytes of data from the address given by the int
 register which can only be read by this instruction.
 The opcode has the form:
 
-| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
-|---|---|---|---|---|---|---|---|
-| 0 | 0 | 1 | 0 | P | P | B | B |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": "B", "bits": 2, "type": 2, "attr": "sizeB"},
+		{"name": "P", "bits": 2, "type": 5, "attr": "ptr mode"},
+		{"name": 0x2, "bits": 4, "type": 4, "attr": "opcode"},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+```
 
-PP defines an addressing form given by the [pointer rules section](#pointer-rules) below.
-BB follows the [size rules section](#size-rules) below
+P defines an addressing form given by the [pointer rules section](#pointer-rules) below.
+B follows the [size rules section](#size-rules) below.
 
 ### STS
 
 The STS instruction stores up to 4 bytes of data to a given direct address.
 The opcode has the form:
 
-| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
-|---|---|---|---|---|---|---|---|
-| 0 | 1 | 0 | 0 | A | A | B | B |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": "B", "bits": 2, "type": 2, "attr": "sizeB"},
+		{"name": "A", "bits": 2, "type": 3, "attr": "sizeA"},
+		{"name": 0x4, "bits": 4, "type": 4, "attr": "opcode"},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+```
 
-AA and BB follow the [size rules](#size-rules) below
+A and B follow the [size rules](#size-rules) below.
 
 ### ST
 
@@ -52,12 +76,20 @@ The ST instruction stores up to 4 bytes of data to the address given by the inte
 register which can only be directly written to by this instruction.
 The opcode has the form:
 
-| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
-|---|---|---|---|---|---|---|---|
-| 0 | 1 | 1 | 0 | P | P | B | B |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": "B", "bits": 2, "type": 2, "attr": "sizeB"},
+		{"name": "P", "bits": 2, "type": 5, "attr": "ptr mode"},
+		{"name": 0x6, "bits": 4, "type": 4, "attr": "opcode"},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+```
 
-PP defines an addressing form given by the [pointer rules section](#pointer-rules) below.
-BB follows
+P defines an addressing form given by the [pointer rules section](#pointer-rules) below.
+B follows the [size rules section](#size-rules) below.
 
 ### LDCS
 
