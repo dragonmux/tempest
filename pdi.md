@@ -4,7 +4,7 @@
 
 What if I told you that PDI was more than just a meer communications protocol? What if I told you that it was a
 complex state machine, so complex in fact that it could nearly be mistaken for a processor.. Well, I would be
-telling the truth.[Title](https://github.com/DavidAnson/markdownlint/blob/v0.33.0/doc/md013.md)
+telling the truth.
 
 ## The instruction set
 
