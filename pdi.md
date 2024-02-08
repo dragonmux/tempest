@@ -364,16 +364,37 @@ The register's bits have the following meanings assigned to them:
 
 This status regsiter indicates the current state of the debug engine when enabled (otherwise it reads as 0)
 
-| 8 | 7 | 6 |   5   |   4   | 3 | 2 | 1 |
-|:-:|:-:|:-:|:-----:|:-----:|:-:|:-:|:-:|
-| - | - | - | RESET | PAUSE | - | - | - |
-| R | R | R |   R   |   R   | R | R | R |
-| 0 | 0 | 0 |   0   |   0   | 0 | 0 | 0 |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": "-", "bits": 3, "attr": ["R", "0"]},
+		{"name": "PAUSE", "bits": 1, "attr": ["R", "0"]},
+		{"name": "RESET", "bits": 1, "attr": ["R", "0"]},
+		{"name": "-", "bits": 3, "attr": ["R", "0"]},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+```
 
-* The RESET bit indicates whether the processor is currently held in reset and is sort-of a duplicate of the RESET bit from the reset CSR.
+* The RESET bit indicates whether the processor is currently held in reset and is sort-of a duplicate of the RESET
+  bit from the reset CSR.
 * The PAUSE bit indicates whether the processor is currently held in execution pause.
 
 #### Register r4
+
+This control register determines whether the debug engine is enabled
+
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": "ENABLE", "bits": 1, "attr": ["R/W", "0"]},
+		{"name": "-", "bits": 7, "attr": ["R", "0"]},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+```
 
 ## Native PDI protocol
 
