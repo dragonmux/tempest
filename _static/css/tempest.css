@@ -1,0 +1,98 @@
+/** css/tempest.css **/
+
+@import 'theme.css';
+
+.s1, .s2, .s4 { stroke: var(--wavedrom-foreground) !important; }
+.s3 { fill: var(--wavedrom-pull-ud) !important; stroke: var(--wavedrom-pull-ud) !important; }
+.s5 { fill: var(--wavedrom-background) !important; }
+.s6 { fill: var(--wavedrom-clock-arrow) !important; }
+.s7 { fill: var(--wavedrom-1) !important; }
+.s8 { fill: var(--wavedrom-2) !important; }
+.s9 { fill: var(--wavedrom-3) !important; }
+.s10 { fill: var(--wavedrom-4) !important; }
+.s11 { fill: var(--wavedrom-5) !important; }
+.s12 { fill: var(--wavedrom-6) !important; }
+.s13 { fill: var(--wavedrom-7) !important; }
+.s14 { fill: var(--wavedrom-8) !important; }
+.s15 { fill: var(--wavedrom-arrow) !important; }
+.s16 { stroke: var(--wavedrom-arrow) !important; }
+
+/*
+.muted { fill: #aaa; }
+.warning { fill: #f6b900; }
+.error { fill: #f60000; }
+.info { fill: #0041c4; }
+.success { fill: #00ab00; }
+*/
+
+svg.WaveDrom > g > rect
+{
+	fill: var(--wavedrom-background) !important;
+}
+
+@media screen and (prefers-color-scheme: light)
+{
+	svg.WaveDrom
+	{
+		--wavedrom-foreground: #000;
+		--wavedrom-background: #fff;
+		--wavedrom-clock-arrow: #000;
+		--wavedrom-pull-ud: #000;
+		--wavedrom-0: #000;
+		--wavedrom-1: #000;
+		--wavedrom-2: #ffffb4;
+		--wavedrom-3: #ffe0b9;
+		--wavedrom-4: #b9e0ff;
+		--wavedrom-5: #ccfdfe;
+		--wavedrom-6: #cdfdc5;
+		--wavedrom-7: #f0c1fb;
+		--wavedrom-8: #f5c2c0;
+		--wavedrom-arrow: #0041c4;
+	}
+}
+
+@media screen and (prefers-color-scheme: dark)
+{
+	svg.WaveDrom
+	{
+		--wavedrom-foreground: #ccc;
+		--wavedrom-background: #1c1c1c;
+		--wavedrom-clock-arrow: #999;
+		--wavedrom-pull-ud: #999;
+		--wavedrom-0: #ccc;
+		--wavedrom-1: #ccc;
+		--wavedrom-2: #b2b300;
+		--wavedrom-3: #b86500;
+		--wavedrom-4: #0065b8;
+		--wavedrom-5: #04c5c8;
+		--wavedrom-6: #22bb07;
+		--wavedrom-7: #930bb1;
+		--wavedrom-8: #9f1d19;
+		--wavedrom-arrow: #4785ff;
+	}
+
+	svg.WaveDrom > g > g > g:nth-child(1) > g
+	{
+		stroke: #ccc !important;
+	}
+
+	svg.WaveDrom text
+	{
+		color: #1c1c1c;
+	}
+
+	svg.WaveDrom > g > g > g:has(text) > text
+	{
+		fill: #6b9cff;
+	}
+
+	svg.WaveDrom > g  g:has(text):has(rect) > rect
+	{
+		fill: #444 !important;
+	}
+
+	svg.WaveDrom > g  g:has(text):has(rect) > text
+	{
+		fill: #eee !important;
+	}
+}

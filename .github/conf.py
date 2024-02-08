@@ -42,10 +42,12 @@ exclude_patterns = [
 
 graphviz_output_format = 'svg'
 
+html_static_path = ['../_static']
 html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
     "collapse_navigation" : False
 }
+html_style = 'css/tempest.css'
 
 autosectionlabel_prefix_document = True
 render_using_wavedrompy = True
