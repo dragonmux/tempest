@@ -247,13 +247,15 @@ The pointer register and all access for it are encoded in the LD and ST instruct
 |  1 1  | ptr++ (reserved) |
 
 ```{note}
-The pointer register is written to by all direct addressing instructions which is undocumented by the datasheets and has a profound impact on the instruction ordering that must be kept.
+The pointer register is written to by all direct addressing instructions which is undocumented by the datasheets and
+has a profound impact on the instruction ordering that must be kept.
 ```
 
 ### PDI Registers
 
 The PDI "CPU" has 16 internal 8-bit registers.
-Some of these are documented, others are "reserved" (they may actually be unused, but it's unclear at this time if they are or if they're not just additional special-function CSRs).
+Some of these are documented, others are "reserved" (they may actually be unused, but it's unclear at this time if
+they are or if they're not just additional special-function CSRs).
 All of these registers are CSRs that define status for and control how debug and programming will run.
 
 | Register# |  Alias  |
@@ -270,11 +272,18 @@ The rest are "reserved".
 
 The status register's bits have the following meanings assigned to them:
 
-| 8 | 7 | 6 | 5 | 4 |   3   |   2   | 1 |
-|:-:|:-:|:-:|:-:|:-:|:-----:|:-----:|:-:|
-| - | - | - | - | - | DBGEN | NVMEN | - |
-| R | R | R | R | R |  R/W  |  R/W  | R |
-| 0 | 0 | 0 | 0 | 0 |   0   |   0   | 0 |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": "-", "bits": 1, "attr": ["R", "0"]},
+		{"name": "NVMEN", "bits": 1, "attr": ["R/W", "0"]},
+		{"name": "DBGEN", "bits": 1, "attr": ["R/W", "0"]},
+		{"name": "-", "bits": 5, "attr": ["R", "0"]},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+```
 
 The bottom row defines the reset state of this register.
 
