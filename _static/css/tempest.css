@@ -120,6 +120,17 @@ svg.WaveDrom > g > rect
 		color: #e95849;
 	}
 
+	.rst-content table.docutils, .wy-table-bordered-all { border-color: #3c3c3c; }
+	.rst-content table.docutils thead, .rst-content table.field-list thead, .wy-table thead { color: #e6e6e6; }
+	html.writer-html5 .rst-content table.docutils th { border-color: #3c3c3c; }
+	.rst-content table.docutils td, .wy-table-bordered-all td { border-color: #3c3c3c; }
+
+	.rst-content table.docutils:not(.field-list) tr:nth-child(2n-1) td, .wy-table-backed, .wy-table-odd td,
+	.wy-table-striped tr:nth-child(2n-1) td
+	{
+		background-color: #333;
+	}
+
 	svg.WaveDrom
 	{
 		--wavedrom-foreground: #ccc;
