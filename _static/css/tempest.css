@@ -149,9 +149,19 @@ svg.WaveDrom > g > rect
 		--wavedrom-arrow: #4785ff;
 	}
 
+	svg.WaveDrom > g > g > g:nth-child(1)
+	{
+		stroke: #e6e6e6 !important;
+	}
+
 	svg.WaveDrom > g > g > g:nth-child(1) > g
 	{
 		stroke: #ccc !important;
+	}
+
+	svg.WaveDrom > g > g > g:nth-child(2) > g:not(:nth-child(3)) > g > text
+	{
+		fill: #ccc !important;
 	}
 
 	svg.WaveDrom text
