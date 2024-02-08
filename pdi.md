@@ -439,9 +439,18 @@ The device when TAP reset, enters IDCode by default.
 The first thing to do when starting a conversation over JTAG is to perform an IDCode to find out what the part is.
 With the TAP IR loaded with IDCode, we then expect a value in the following format to be read:
 
-| 31 ... 28 | 27  ...  12 | 11    ...     1 | 0 |
-|:---------:|:-----------:|:---------------:|:-:|
-|  Version  | Part Number | Manufacturer ID | 1 |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": 1, "bits": 1},
+		{"name": "Manufacturer ID", "bits": 11},
+		{"name": "Part Number", "bits": 16},
+		{"name": "Version", "bits": 4},
+	],
+	"config": {"hspace": 675, "bits": 32}
+}
+```
 
 Bit 0 listed here is the constant 1.
 
