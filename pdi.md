@@ -178,6 +178,46 @@ There are two known key value constants which are:
 * NVM - `0x1289ab45cdd888ff`
 * Debug - `0x3a212dd49f7c8121`
 
+These are sent little endian and look like this on the wire:
+
+```{wavedrom}
+{
+	"signal":
+	[
+		{
+			"name": "clk",
+			"wave": "P...................................................................................................",
+			"phase": 0.5
+		},
+		{
+			"name": "data",
+			"wave": "103.......4103.......4103.......4103.......4103.......4103.......4103.......4103.......4103.......41",
+			"data": ["ff", 0, "88", 0, "d8", 0, "cd", 1, "45", 1, "ab", 1, "89", 1, "12", 0]
+		},
+	],
+	"config": {"hscale": 1}
+}
+```
+
+```{wavedrom}
+{
+	"signal":
+	[
+		{
+			"name": "clk",
+			"wave": "P...................................................................................................",
+			"phase": 0.5
+		},
+		{
+			"name": "data",
+			"wave": "103.......4103.......4103.......4103.......4103.......4103.......4103.......4103.......4103.......41",
+			"data": ["21", 0, "81", 0, "7c", 1, "9f", 0, "d4", 0, "2d", 0, "21", 0, "3a", 0]
+		},
+	],
+	"config": {"hscale": 1}
+}
+```
+
 ### Size Rules
 
 There are two size types (A and B) in the official protocol documentation.. however, they're identical so we
