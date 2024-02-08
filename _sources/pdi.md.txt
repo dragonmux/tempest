@@ -347,7 +347,8 @@ The register's bits have the following meanings assigned to them:
 }
 ```
 
-* GUARDTIME specifies the number of idle bits of guard time inserted between PDI RX and TX direction changes. It defaults to 128 bits, and what the bits mean is determined by the table below:
+* GUARDTIME specifies the number of idle bits of guard time inserted between PDI RX and TX direction changes.
+  It defaults to 128 bits, and what the bits mean is determined by the table below:
 
 | GUARDTIME | number of idle bits |
 | :-------: |:--------------------|
@@ -400,9 +401,12 @@ This control register determines whether the debug engine is enabled
 
 ## JTAG-PDI protocol
 
-This section assumes exiting basic working knowledge of the JTAG standard (IEEE 1149.1-2013). This will only cover how the protocol works with the TAP and sits above it.
+This section assumes exiting basic working knowledge of the JTAG standard (IEEE 1149.1-2013). This will only cover
+how the protocol works with the TAP and sits above it.
 
-The JTAG-encapsulated form of PDI is rather interesting in construction as it consists of a few elements, some of which caused by taking a half-duplex, single-data-wire bi-directional protocol with turn-arounds and re-mapping it to a full-duplex comms protocol. The first of the elements is how ID'ing the device works, the second is entering PDI
+The JTAG-encapsulated form of PDI is rather interesting in construction as it consists of a few elements, some of
+which caused by taking a half-duplex, single-data-wire bi-directional protocol with turn-arounds and re-mapping it
+to a full-duplex comms protocol. The first of the elements is how ID'ing the device works, the second is entering PDI
 mode, and the third is the encapsulation of the PDI data.
 
 ### The TAP instruction register
@@ -432,11 +436,21 @@ The device when TAP reset, enters IDCode by default.
 
 ### Identification (IR = IDCode)
 
-The first thing to do when starting a conversation over JTAG is to perform an IDCode to find out what the part is. With the TAP IR loaded with IDCode, we then expect a value in the following format to be read:
+The first thing to do when starting a conversation over JTAG is to perform an IDCode to find out what the part is.
+With the TAP IR loaded with IDCode, we then expect a value in the following format to be read:
 
-| 31 ... 28 | 27  ...  12 | 11    ...     1 | 0 |
-|:---------:|:-----------:|:---------------:|:-:|
-|  Version  | Part Number | Manufacturer ID | 1 |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": 1, "bits": 1},
+		{"name": "Manufacturer ID", "bits": 11},
+		{"name": "Part Number", "bits": 16},
+		{"name": "Version", "bits": 4},
+	],
+	"config": {"hspace": 675, "bits": 32}
+}
+```
 
 Bit 0 listed here is the constant 1.
 
@@ -451,9 +465,14 @@ The following are a list of known values and the chips they belong to:
 
 ### PDI Mode (IR = PDI)
 
-Once you have identified a device and confirmed it definitely implements PDI, issue the PDI Comms instruction to the TAP. This will (until touching IR again) enter PDI mode and drop the TAP into JTAG-PDI mode. From here on in, you can ignore the TAP completely save for clocking data in and out of the 9-bit register that is now connected between TDI and TDO.
+Once you have identified a device and confirmed it definitely implements PDI, issue the PDI Comms instruction to the
+TAP. This will (until touching IR again) enter PDI mode and drop the TAP into JTAG-PDI mode. From here on in, you can
+ignore the TAP completely save for clocking data in and out of the 9-bit register that is now connected between TDI
+and TDO.
 
-Of importance to note, the PDI register in the Atmel literature is talked about as if it's a single shift-register between TDI and TDO, however it it may be helpful to think of it as more like two seperate shift registers - one connected to TDI and one to TDO  - for the purpose of the exchanges had.
+Of importance to note, the PDI register in the Atmel literature is talked about as if it's a single shift-register
+between TDI and TDO, however it it may be helpful to think of it as more like two seperate shift registers - one
+connected to TDI and one to TDO  - for the purpose of the exchanges had.
 
 #### PDI Frame Format
 
@@ -465,7 +484,8 @@ PDI data entering and leaving the PDI TAP register has the following format:
 
 This is sent LSB first.
 
-This encapsulation defines 3 special character values of note to emulate certain aspects of the native protocol and handle that this is full-duplex comms:
+This encapsulation defines 3 special character values of note to emulate certain aspects of the native protocol and
+handle that this is full-duplex comms:
 
 * the Break character: 0xBB + P1
 * the Delay character: 0xDB + P1
@@ -476,7 +496,10 @@ The bit transitions for communications to TDI must be performed on the TCK falli
 
 #### The conversation, a worked example
 
-JTAG-PDI does two important things to handle being a full-duplex protocol, the first is that the **target's controller** will send Empty characters while waiting for more imput and and the **programmer** must use the NUL byte as a dummy character when expecting the target to send data back. It is important that the programmer not generate parity errors as this triggers a PDI transaction abort.
+JTAG-PDI does two important things to handle being a full-duplex protocol, the first is that the **target's controller**
+will send Empty characters while waiting for more imput and and the **programmer** must use the NUL byte as a dummy
+character when expecting the target to send data back. It is important that the programmer not generate parity errors
+as this triggers a PDI transaction abort.
 
 In practice this looks a bit like:
 
@@ -491,4 +514,5 @@ sequenceDiagram
 	Target-->>Programmer: 0x00
 ```
 
-In this example, we ask the target for its PDI status, and get the answer '0' (neither programming nor debug mode enabled).
+In this example, we ask the target for its PDI status, and get the answer '0'
+(neither programming nor debug mode enabled).
