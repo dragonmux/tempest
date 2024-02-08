@@ -166,7 +166,8 @@ svg.WaveDrom > g > rect
 		stroke: #ccc !important;
 	}
 
-	svg.WaveDrom > g > g:nth-child(1) > g:nth-child(2) > g:not(:nth-child(3)) > g > text
+	svg.WaveDrom > g > g:nth-child(1) > g:nth-child(2) > g:not(:nth-child(3)) > g > text,
+	svg.WaveDrom > g > g:nth-child(1) > g:nth-child(2) > g:nth-child(4) g > text
 	{
 		fill: #ccc !important;
 	}
