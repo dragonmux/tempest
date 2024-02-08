@@ -7,13 +7,11 @@
 # sys.path.insert(0, os.path.abspath('.'))
 import sphinx_rtd_theme
 
-
 # -- Project information -----------------------------------------------------
 
 project = 'Tempest'
-copyright = '2021, Tempest Contributors'
+copyright = '2021, 2024, Tempest Contributors'
 author = 'Tempest Contributors'
-
 
 # -- General configuration ---------------------------------------------------
 extensions = [
@@ -21,6 +19,7 @@ extensions = [
 	'sphinx.ext.graphviz',
 	'sphinx.ext.autosectionlabel',
 	'sphinxcontrib.mermaid',
+	'sphinxcontrib.wavedrom',
 	'sphinx_rtd_theme',
 	'myst_parser',
 ]
@@ -35,6 +34,7 @@ source_suffix = {
 
 exclude_patterns = [
 	'.venv/*',
+	'env/*',
 	'.github/*',
 	'config.py',
 	'LICENSE',
@@ -48,3 +48,4 @@ html_theme_options = {
 }
 
 autosectionlabel_prefix_document = True
+render_using_wavedrompy = True

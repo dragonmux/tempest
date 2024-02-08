@@ -1,4 +1,6 @@
 sphinx
 sphinx-rtd-theme
 sphinxcontrib-mermaid
+sphinxcontrib-wavedrom
 myst-parser
+wavedrom
