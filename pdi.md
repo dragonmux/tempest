@@ -2,11 +2,14 @@
 
 ## The component in the MCU
 
-What if I told you that PDI was more than just a meer communications protocol? What if I told you that it was a complex state machine, so complex in fact that it could nearly be mistaken for a processor.. Well, I would be telling the truth.
+What if I told you that PDI was more than just a meer communications protocol? What if I told you that it was a
+complex state machine, so complex in fact that it could nearly be mistaken for a processor.. Well, I would be
+telling the truth.[Title](https://github.com/DavidAnson/markdownlint/blob/v0.33.0/doc/md013.md)
 
 ## The instruction set
 
-All values transmitted as part of instructions and their effects are transmitted in LSB-first (Little Endian) byte order.
+All values transmitted as part of instructions and their effects are transmitted in LSB-first (Little Endian)
+byte order.
 
 ### LDS
 
@@ -21,7 +24,8 @@ AA and BB follow the [size rules](#size-rules) below
 
 ### LD
 
-The LD instruction loads up to 4 bytes of data from the address given by the internal indirect addressing `ptr` register which can only be read by this instruction.
+The LD instruction loads up to 4 bytes of data from the address given by the internal indirect addressing `ptr`
+register which can only be read by this instruction.
 The opcode has the form:
 
 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
@@ -44,7 +48,8 @@ AA and BB follow the [size rules](#size-rules) below
 
 ### ST
 
-The ST instruction stores up to 4 bytes of data to the address given by the internal indirect addressing `ptr` register which can only be directly written to by this instruction.
+The ST instruction stores up to 4 bytes of data to the address given by the internal indirect addressing `ptr`
+register which can only be directly written to by this instruction.
 The opcode has the form:
 
 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
@@ -56,7 +61,8 @@ BB follows
 
 ### LDCS
 
-The LDCS instruction allows reading of the PDI internal registers. PDI uses a 16-register stackless "CPU" (it's not a CPU but close enough for this). See [PDI registers](#pdi-registers) below for more information on these registers.
+The LDCS instruction allows reading of the PDI internal registers. PDI uses a 16-register stackless "CPU" (it's not a
+CPU but close enough for this). See [PDI registers](#pdi-registers) below for more information on these registers.
 They are encoded numerically in order in the bottom half of the instruction, which has the form:
 
 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
@@ -67,7 +73,8 @@ RRRR defines which register to read.
 
 ### REPEAT
 
-The REPEAT instruction specifies that the next instruction(!) is to be repeated N times after initial execution, where N is specified in the bytes following this instruction.
+The REPEAT instruction specifies that the next instruction(!) is to be repeated N times after initial execution,
+where N is specified in the bytes following this instruction.
 The opcode has the following form:
 
 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
@@ -78,7 +85,8 @@ BB follows the [size rules section](#size-rules) below and specifies how many by
 
 ### STCS
 
-The STCS instruction allows writing to the PDI internal registsers. See [PDI registers](#pdi-registers) below for more information on these registers.
+The STCS instruction allows writing to the PDI internal registsers. See [PDI registers](#pdi-registers) below for
+more information on these registers.
 They are encoded numerically inorder in the bottom half of the instruction, which has the form:
 
 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
@@ -104,7 +112,8 @@ There are two known key value constants which are:
 
 ### Size Rules
 
-There are two size types (A and B) in the official protocol documentation.. however, they're identical so we only document them once here. A is always used for address length encoding, and B for data.
+There are two size types (A and B) in the official protocol documentation.. however, they're identical so we
+only document them once here. A is always used for address length encoding, and B for data.
 
 The 2-bit value defines the number of bytes that follow the instruction for the specific type of value following.
 When present the A value is transmitted first, then the B.
