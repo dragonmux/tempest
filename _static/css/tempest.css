@@ -53,6 +53,73 @@ svg.WaveDrom > g > rect
 
 @media screen and (prefers-color-scheme: dark)
 {
+	body { color: #b9b9b9; }
+	html, .wy-body-for-nav { background-color: #181818 !important; }
+	a { color: #58a6da; }
+	a:visited { color: #aa71c1; }
+
+	.wy-side-nav
+	{
+		color: #a0a0a0;
+		background-color: #292929;
+	}
+
+	.wy-side-nav-search
+	{
+		background-color: #2573a7;
+		color: #eee;
+	}
+
+	.wy-side-nav-search input[type="text"] { border-color: #2573a7; }
+
+	.wy-menu-vertical li.current > a, .wy-menu-vertical li.on a
+	{
+		color: #b9b9b9;
+		background-color: #1c1c1c;
+	}
+
+	.wy-menu-vertical li.current > a button.toctree-expand, .wy-menu-vertical li.on a button.toctree-expand
+	{
+		color: #c2c2c2;
+	}
+
+	.wy-menu-vertical li.current a { border-right-color: #444; }
+	.wy-menu-vertical li.current { background-color: #2b2b2b; }
+	.wy-menu-vertical li.toctree-l1.current { border-color: #444; }
+	.wy-menu-vertical li.toctree-l1.current > a { border-color: #444; }
+
+	.wy-menu-vertical li.toctree-l2.current > a, .wy-menu-vertical li.toctree-l2.current li.toctree-l3 > a
+	{
+		background-color: #3a3a3a;
+	}
+
+	.wy-menu-vertical li.toctree-l2 a, .wy-menu-vertical li.toctree-l3 a, .wy-menu-vertical li.toctree-l4 a,
+	.wy-menu-vertical li.toctree-l5 a, .wy-menu-vertical li.toctree-l6 a, .wy-menu-vertical li.toctree-l7 a,
+	.wy-menu-vertical li.toctree-l8 a, .wy-menu-vertical li.toctree-l9 a, .wy-menu-vertical li.toctree-l10 a
+	{
+		color: #b9b9b9;
+	}
+
+	.wy-nav-content { background-color: #1c1c1c; }
+
+	input[type="color"], input[type="date"], input[type="datetime-local"], input[type="datetime"], input[type="email"],
+	input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"],
+	input[type="text"], input[type="time"], input[type="url"], input[type="week"]
+	{
+		box-shadow: rgb(43, 47, 49) 0px 1px 3px inset;
+	}
+
+	.rst-content code, .rst-content tt, code
+	{
+		background-color: #1a1a1a;
+		border-color: #3c3c3c;
+	}
+
+	.rst-content code.literal, .rst-content tt.literal
+	{
+		color: #e95849;
+	}
+
 	svg.WaveDrom
 	{
 		--wavedrom-foreground: #ccc;
