@@ -30,6 +30,18 @@ svg.WaveDrom > g > rect
 	fill: var(--wavedrom-background) !important;
 }
 
+div.mermaid > svg .actor
+{
+	rx: 5px;
+	ry: 5px;
+}
+
+div.mermaid > svg .note
+{
+	rx: 10px;
+	ry: 10px;
+}
+
 @media screen and (prefers-color-scheme: light)
 {
 	svg.WaveDrom
@@ -108,7 +120,7 @@ svg.WaveDrom > g > rect
 	.wy-menu-vertical li.toctree-l1 > a:hover { background-color: #414141; color: #ddd; }
 	.wy-menu-vertical li.toctree-l2 > a:hover { background-color: #454545; color: #ddd; }
 	.wy-menu-vertical li.toctree-l3 > a:hover { background-color: #494949 !important; color: #ddd; }
-	.wy-menu-vertical li.toctree-l4 > a:hover { background-color: #4d4d4d; color: #ddd; }
+	.wy-menu-vertical li.toctree-l4 > a:hover { background-color: #4d4d4d !important; color: #ddd; }
 	.wy-menu-vertical li.toctree-l5 > a:hover { background-color: #515151; color: #ddd; }
 
 	.wy-nav-content { background-color: #1c1c1c; }
@@ -176,6 +188,27 @@ svg.WaveDrom > g > rect
 		background-color: #2573a7;
 	}
 
+	.btn
+	{
+		background-color: #27ae60 !important;
+		color: #333 !important;
+		border-color: rgba(255, 255, 255, .1);
+	}
+
+	.btn-neutral
+	{
+		background-color: #262626 !important;
+		color: #bbb !important;
+	}
+
+	.btn-neutral:visited { color: #bbb !important; }
+
+	.btn-neutral:hover
+	{
+		background-color: #313131 !important;
+		color: #ccc !important;
+	}
+
 	svg.WaveDrom
 	{
 		--wavedrom-foreground: #ccc;
@@ -194,15 +227,8 @@ svg.WaveDrom > g > rect
 		--wavedrom-arrow: #4785ff;
 	}
 
-	svg.WaveDrom > g > g > g:nth-child(1)
-	{
-		stroke: #e6e6e6 !important;
-	}
-
-	svg.WaveDrom > g > g > g:nth-child(1) > g
-	{
-		stroke: #ccc !important;
-	}
+	svg.WaveDrom > g > g > g:nth-child(1) { stroke: #e6e6e6 !important; }
+	svg.WaveDrom > g > g > g:nth-child(1) > g { stroke: #ccc !important; }
 
 	svg.WaveDrom > g > g:nth-child(1) > g:nth-child(2) > g:not(:nth-child(3)) > g > text,
 	svg.WaveDrom > g > g:nth-child(1) > g:nth-child(2) > g:nth-child(4) g > text
@@ -217,26 +243,35 @@ svg.WaveDrom > g > rect
 
 	svg.WaveDrom > g > g:nth-child(1) > g:nth-child(2) > g:nth-child(3) g > text
 	{
-		fill: #eee !important;
+		fill: #ddd !important;
 	}
 
-	svg.WaveDrom text
+	svg.WaveDrom text { color: #1c1c1c; }
+	svg.WaveDrom > g > g > g:has(text) > text { fill: #6b9cff; }
+	svg.WaveDrom > g  g:has(text):has(rect) > rect { fill: #444 !important; }
+	svg.WaveDrom > g  g:has(text):has(rect) > text { fill: #ddd !important; }
+
+	div.mermaid > svg .actor
 	{
-		color: #1c1c1c;
+		fill: #1c1c1c !important;
+		stroke: #999 !important;
 	}
 
-	svg.WaveDrom > g > g > g:has(text) > text
+	div.mermaid > svg .note
 	{
-		fill: #6b9cff;
+		fill:#665a00 !important;
+		stroke: #d0d062 !important;
 	}
 
-	svg.WaveDrom > g  g:has(text):has(rect) > rect
-	{
-		fill: #444 !important;
-	}
+	div.mermaid > svg text.actor > tspan { fill: #b9b9b9 !important; }
+	div.mermaid > svg .messageText { fill: #ccc !important; }
+	div.mermaid > svg .messageLine0, div.mermaid > svg .messageLine1, div.mermaid > svg line
+		{ stroke: #999 !important; }
+	div.mermaid > svg .noteText, div.mermaid > svg .noteText > tspan { fill: #b9b9b9 !important; }
 
-	svg.WaveDrom > g  g:has(text):has(rect) > text
+	div.mermaid > svg marker#arrowhead > path
 	{
-		fill: #eee !important;
+		fill: #c2c2c2;
+		stroke: #c2c2c2;
 	}
 }
