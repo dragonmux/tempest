@@ -109,6 +109,12 @@ svg.WaveDrom > g > rect
 		box-shadow: rgb(43, 47, 49) 0px 1px 3px inset;
 	}
 
+	input, textarea, select, button, dialog
+	{
+		background-color: #181818;
+		color: #eee;
+	}
+
 	.rst-content code, .rst-content tt, code
 	{
 		background-color: #1a1a1a;
