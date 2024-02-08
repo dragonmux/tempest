@@ -22,7 +22,8 @@ The opcode has the form:
 	[
 		{"name": "B", "bits": 2, "type": 2, "attr": "sizeB"},
 		{"name": "A", "bits": 2, "type": 3, "attr": "sizeA"},
-		{"name": 0x0, "bits": 4, "type": 4, "attr": "opcode"},
+		{"name": 0, "bits": 1},
+		{"name": 0x0, "bits": 3, "type": 4, "attr": "opcode (0x0)"},
 	],
 	"config": {"hspace": 500, "bits": 8}
 }
@@ -42,7 +43,8 @@ The opcode has the form:
 	[
 		{"name": "B", "bits": 2, "type": 2, "attr": "sizeB"},
 		{"name": "P", "bits": 2, "type": 5, "attr": "ptr mode"},
-		{"name": 0x2, "bits": 4, "type": 4, "attr": "opcode"},
+		{"name": 0, "bits": 1},
+		{"name": 0x1, "bits": 3, "type": 4, "attr": "opcode (0x2)"},
 	],
 	"config": {"hspace": 500, "bits": 8}
 }
@@ -62,7 +64,8 @@ The opcode has the form:
 	[
 		{"name": "B", "bits": 2, "type": 2, "attr": "sizeB"},
 		{"name": "A", "bits": 2, "type": 3, "attr": "sizeA"},
-		{"name": 0x4, "bits": 4, "type": 4, "attr": "opcode"},
+		{"name": 0, "bits": 1},
+		{"name": 0x2, "bits": 3, "type": 4, "attr": "opcode (0x4)"},
 	],
 	"config": {"hspace": 500, "bits": 8}
 }
@@ -82,7 +85,8 @@ The opcode has the form:
 	[
 		{"name": "B", "bits": 2, "type": 2, "attr": "sizeB"},
 		{"name": "P", "bits": 2, "type": 5, "attr": "ptr mode"},
-		{"name": 0x6, "bits": 4, "type": 4, "attr": "opcode"},
+		{"name": 0, "bits": 1},
+		{"name": 0x3, "bits": 3, "type": 4, "attr": "opcode (0x6)"},
 	],
 	"config": {"hspace": 500, "bits": 8}
 }
@@ -97,11 +101,19 @@ The LDCS instruction allows reading of the PDI internal registers. PDI uses a 16
 CPU but close enough for this). See [PDI registers](#pdi-registers) below for more information on these registers.
 They are encoded numerically in order in the bottom half of the instruction, which has the form:
 
-| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
-|---|---|---|---|---|---|---|---|
-| 1 | 0 | 0 | 0 | R | R | R | R |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": "PDI register", "bits": 4, "type": 6, "attr": "parameter"},
+		{"name": 0, "bits": 1},
+		{"name": 0x4, "bits": 3, "type": 4, "attr": "opcode (0x8)"},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+```
 
-RRRR defines which register to read.
+The opcode's parameter defines which register to read.
 
 ### REPEAT
 
@@ -109,11 +121,20 @@ The REPEAT instruction specifies that the next instruction(!) is to be repeated 
 where N is specified in the bytes following this instruction.
 The opcode has the following form:
 
-| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
-|---|---|---|---|---|---|---|---|
-| 1 | 0 | 1 | 0 | 0 | 0 | B | B |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": "B", "bits": 2, "type": 2, "attr": "sizeB"},
+		{"name": 0, "bits": 3},
+		{"name": 0x5, "bits": 3, "type": 4, "attr": "opcode (0xa)"},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+```
 
-BB follows the [size rules section](#size-rules) below and specifies how many bytes follow this instruction to be 0-padded and loaded into the PDI repeat register
+B follows the [size rules section](#size-rules) below and specifies how many bytes follow this instruction to
+be 0-padded and loaded into the PDI repeat register
 
 ### STCS
 
@@ -121,26 +142,81 @@ The STCS instruction allows writing to the PDI internal registsers. See [PDI reg
 more information on these registers.
 They are encoded numerically inorder in the bottom half of the instruction, which has the form:
 
-| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
-|---|---|---|---|---|---|---|---|
-| 1 | 1 | 0 | 0 | R | R | R | R |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": "PDI register", "bits": 4, "type": 6, "attr": "parameter"},
+		{"name": 0, "bits": 1},
+		{"name": 0x6, "bits": 3, "type": 4, "attr": "opcode (0xc)"},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+```
 
-RRRR defines which register to write.
+The opcode's parameter defines which register to write.
 
 ### KEY
 
 The KEY instruction is used to unlock special functions of the PDI controller.
 The opcode has the following form:
 
-| 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 |
-|---|---|---|---|---|---|---|---|
-| 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
+```{wavedrom}
+{
+	"reg":
+	[
+		{"name": 0, "bits": 5},
+		{"name": 0x7, "bits": 3, "type": 4, "attr": "opcode (0xe)"},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+```
 
 8 bytes follow the key instruction and provide a special unlocking value for the feature you wish to unlock.
 There are two known key value constants which are:
 
-* NVM - 0x1289ab45cdd888ff
-* Debug - 0x3a212dd49f7c8121
+* NVM - `0x1289ab45cdd888ff`
+* Debug - `0x3a212dd49f7c8121`
+
+These are sent little endian and look like this on the wire:
+
+```{wavedrom}
+{
+	"signal":
+	[
+		{
+			"name": "clk",
+			"wave": "P...................................................................................................",
+			"phase": 0.5
+		},
+		{
+			"name": "data",
+			"wave": "103.......4103.......4103.......4103.......4103.......4103.......4103.......4103.......4103.......41",
+			"data": ["ff", 0, "88", 0, "d8", 0, "cd", 1, "45", 1, "ab", 1, "89", 1, "12", 0]
+		},
+	],
+	"config": {"hscale": 1}
+}
+```
+
+```{wavedrom}
+{
+	"signal":
+	[
+		{
+			"name": "clk",
+			"wave": "P...................................................................................................",
+			"phase": 0.5
+		},
+		{
+			"name": "data",
+			"wave": "103.......4103.......4103.......4103.......4103.......4103.......4103.......4103.......4103.......41",
+			"data": ["21", 0, "81", 0, "7c", 1, "9f", 0, "d4", 0, "2d", 0, "21", 0, "3a", 0]
+		},
+	],
+	"config": {"hscale": 1}
+}
+```
 
 ### Size Rules
 
