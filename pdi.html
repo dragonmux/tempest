@@ -595,55 +595,43 @@ The register’s bits have the following meanings assigned to them:</p>
 <section id="register-r3">
 <h4>Register r3<a class="headerlink" href="#register-r3" title="Link to this heading"></a></h4>
 <p>This status regsiter indicates the current state of the debug engine when enabled (otherwise it reads as 0)</p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head text-center"><p>8</p></th>
-<th class="head text-center"><p>7</p></th>
-<th class="head text-center"><p>6</p></th>
-<th class="head text-center"><p>5</p></th>
-<th class="head text-center"><p>4</p></th>
-<th class="head text-center"><p>3</p></th>
-<th class="head text-center"><p>2</p></th>
-<th class="head text-center"><p>1</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-center"><p>-</p></td>
-<td class="text-center"><p>-</p></td>
-<td class="text-center"><p>-</p></td>
-<td class="text-center"><p>RESET</p></td>
-<td class="text-center"><p>PAUSE</p></td>
-<td class="text-center"><p>-</p></td>
-<td class="text-center"><p>-</p></td>
-<td class="text-center"><p>-</p></td>
-</tr>
-<tr class="row-odd"><td class="text-center"><p>R</p></td>
-<td class="text-center"><p>R</p></td>
-<td class="text-center"><p>R</p></td>
-<td class="text-center"><p>R</p></td>
-<td class="text-center"><p>R</p></td>
-<td class="text-center"><p>R</p></td>
-<td class="text-center"><p>R</p></td>
-<td class="text-center"><p>R</p></td>
-</tr>
-<tr class="row-even"><td class="text-center"><p>0</p></td>
-<td class="text-center"><p>0</p></td>
-<td class="text-center"><p>0</p></td>
-<td class="text-center"><p>0</p></td>
-<td class="text-center"><p>0</p></td>
-<td class="text-center"><p>0</p></td>
-<td class="text-center"><p>0</p></td>
-<td class="text-center"><p>0</p></td>
-</tr>
-</tbody>
-</table>
+
+<div style="overflow-x:auto">
+<script type="WaveDrom">
+{
+	"reg":
+	[
+		{"name": "-", "bits": 3, "attr": ["R", "0"]},
+		{"name": "PAUSE", "bits": 1, "attr": ["R", "0"]},
+		{"name": "RESET", "bits": 1, "attr": ["R", "0"]},
+		{"name": "-", "bits": 3, "attr": ["R", "0"]},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+</script>
+</div>
 <ul class="simple">
-<li><p>The RESET bit indicates whether the processor is currently held in reset and is sort-of a duplicate of the RESET bit from the reset CSR.</p></li>
+<li><p>The RESET bit indicates whether the processor is currently held in reset and is sort-of a duplicate of the RESET
+bit from the reset CSR.</p></li>
 <li><p>The PAUSE bit indicates whether the processor is currently held in execution pause.</p></li>
 </ul>
 </section>
 <section id="register-r4">
 <h4>Register r4<a class="headerlink" href="#register-r4" title="Link to this heading"></a></h4>
+<p>This control register determines whether the debug engine is enabled</p>
+
+<div style="overflow-x:auto">
+<script type="WaveDrom">
+{
+	"reg":
+	[
+		{"name": "ENABLE", "bits": 1, "attr": ["R/W", "0"]},
+		{"name": "-", "bits": 7, "attr": ["R", "0"]},
+	],
+	"config": {"hspace": 500, "bits": 8}
+}
+</script>
+</div>
 </section>
 </section>
 </section>
